@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.company.imageproject"
+    },
+    "jhipsterVersion": "6.9.1",
+    "applicationType": "monolith",
+    "baseName": "imageproject",
+    "packageName": "com.company.imageproject",
+    "packageFolder": "com/company/imageproject",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "elasticsearch",
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ODFiNGJiYmQ5YzE5YjlmNmUwZjAxZmJlYTAxOWYwZmFhZGM0ZTgwNzhhOTY3NDE2MzFlNTNkZDBjYWUzYWQxNDQ0N2ZiZTIwNDg5ZmY1MmM3MjA3YmVmNjlmNzAyMWVlMjg0NTQ3MGFjYmMzOTY5MzJkZWFkMjM4YzMwNWNmMDI=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1593687058056,
+    "testFrameworks": ["cucumber"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}
