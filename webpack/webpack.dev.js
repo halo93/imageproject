@@ -21,11 +21,9 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
             context: [
                 '/api',
                 '/services',
-                '/management',
                 '/swagger-resources',
                 '/v2/api-docs',
-                '/h2-console',
-                '/auth'
+                '/h2-console'
             ],
             target: `http${options.tls ? 's' : ''}://localhost:8080`,
             secure: false,
@@ -110,11 +108,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         new writeFilePlugin(),
         new webpack.WatchIgnorePlugin([
             utils.root('src/test'),
-        ]),
-        new WebpackNotifierPlugin({
-            title: 'JHipster',
-            contentImage: path.join(__dirname, 'logo-jhipster.png')
-        })
+        ])
     ].filter(Boolean),
     mode: 'development'
 });

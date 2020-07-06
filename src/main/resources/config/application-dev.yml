@@ -19,11 +19,6 @@ logging:
     io.github.jhipster: DEBUG
     com.company.imageproject: DEBUG
 
-management:
-  health:
-    elasticsearch:
-      enabled: false
-
 spring:
   profiles:
     active: dev
@@ -55,23 +50,8 @@ spring:
         useServerPrepStmts: true
   jpa:
     show-sql: true
-  data:
-    elasticsearch:
-      properties:
-        path:
-          home: target/elasticsearch
   liquibase:
-    # Remove 'faker' if you do not want the sample data to be loaded automatically
-    contexts: dev, faker
-  mail:
-    host: localhost
-    port: 25
-    username:
-    password:
-  messages:
-    cache-duration: PT1S # 1 second, see the ISO 8601 standard
-  thymeleaf:
-    cache: false
+    contexts: dev
 
 server:
   port: 8080
@@ -88,32 +68,15 @@ jhipster:
     allowed-origins: '*'
     allowed-methods: '*'
     allowed-headers: '*'
-    exposed-headers: 'Authorization,Link,X-Total-Count'
+    exposed-headers: 'Link,X-Total-Count'
     allow-credentials: true
     max-age: 1800
-  security:
-    authentication:
-      jwt:
-        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: ODFiNGJiYmQ5YzE5YjlmNmUwZjAxZmJlYTAxOWYwZmFhZGM0ZTgwNzhhOTY3NDE2MzFlNTNkZDBjYWUzYWQxNDQ0N2ZiZTIwNDg5ZmY1MmM3MjA3YmVmNjlmNzAyMWVlMjg0NTQ3MGFjYmMzOTY5MzJkZWFkMjM4YzMwNWNmMDI=
-        # Token is valid 24 hours
-        token-validity-in-seconds: 86400
-        token-validity-in-seconds-for-remember-me: 2592000
-  mail: # specific JHipster mail property, for standard properties see MailProperties
-    base-url: http://127.0.0.1:8080
   metrics:
     logs: # Reports metrics in the logs
       enabled: false
       report-frequency: 60 # in seconds
   logging:
     use-json-format: false # By default, logs are not in Json format
-    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
-      enabled: false
-      host: localhost
-      port: 5000
-      queue-size: 512
-  audit-events:
-    retention-period: 30 # Number of days before audit events are deleted.
 
 # ===================================================================
 # Application specific properties
@@ -124,4 +87,6 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  elasticsearch:
+    host: https://search-imageproject-37fk57mamgbuhltwif2xdeuuti.us-west-1.es.amazonaws.com

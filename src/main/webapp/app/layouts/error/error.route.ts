@@ -7,17 +7,7 @@ export const errorRoute: Routes = [
     path: 'error',
     component: ErrorComponent,
     data: {
-      authorities: [],
       pageTitle: 'Error page!',
-    },
-  },
-  {
-    path: 'accessdenied',
-    component: ErrorComponent,
-    data: {
-      authorities: [],
-      pageTitle: 'Error page!',
-      errorMessage: 'You are not authorized to access this page.',
     },
   },
   {

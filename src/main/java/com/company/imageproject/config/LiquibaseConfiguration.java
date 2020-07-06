@@ -3,8 +3,7 @@ package com.company.imageproject.config;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.liquibase.SpringLiquibaseUtil;
 import liquibase.integration.spring.SpringLiquibase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -19,15 +18,10 @@ import javax.sql.DataSource;
 import java.util.concurrent.Executor;
 
 @Configuration
+@RequiredArgsConstructor
 public class LiquibaseConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(LiquibaseConfiguration.class);
-
     private final Environment env;
-
-    public LiquibaseConfiguration(Environment env) {
-        this.env = env;
-    }
 
     @Bean
     public SpringLiquibase liquibase(@Qualifier("taskExecutor") Executor executor,
@@ -53,7 +47,6 @@ public class LiquibaseConfiguration {
             liquibase.setShouldRun(false);
         } else {
             liquibase.setShouldRun(liquibaseProperties.isEnabled());
-            log.debug("Configuring Liquibase");
         }
         return liquibase;
     }

@@ -2,8 +2,6 @@ package com.company.imageproject.web.rest.errors;
 
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,16 +26,6 @@ public class ExceptionTranslatorTestController {
 
     @GetMapping("/missing-servlet-request-parameter")
     public void missingServletRequestParameterException(@RequestParam String param) {
-    }
-
-    @GetMapping("/access-denied")
-    public void accessdenied() {
-        throw new AccessDeniedException("test access denied!");
-    }
-
-    @GetMapping("/unauthorized")
-    public void unauthorized() {
-        throw new BadCredentialsException("test authentication failed!");
     }
 
     @GetMapping("/response-status")

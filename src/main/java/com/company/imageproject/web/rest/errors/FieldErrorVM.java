@@ -1,7 +1,10 @@
 package com.company.imageproject.web.rest.errors;
 
+import lombok.RequiredArgsConstructor;
+
 import java.io.Serializable;
 
+@RequiredArgsConstructor
 public class FieldErrorVM implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -11,12 +14,6 @@ public class FieldErrorVM implements Serializable {
     private final String field;
 
     private final String message;
-
-    public FieldErrorVM(String dto, String field, String message) {
-        this.objectName = dto;
-        this.field = field;
-        this.message = message;
-    }
 
     public String getObjectName() {
         return objectName;

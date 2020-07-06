@@ -1,8 +1,7 @@
 package com.company.imageproject.config;
 
 import io.github.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.boot.autoconfigure.task.TaskExecutionProperties;
@@ -18,20 +17,14 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 @EnableScheduling
+@RequiredArgsConstructor
 public class AsyncConfiguration implements AsyncConfigurer {
 
-    private final Logger log = LoggerFactory.getLogger(AsyncConfiguration.class);
-
     private final TaskExecutionProperties taskExecutionProperties;
-
-    public AsyncConfiguration(TaskExecutionProperties taskExecutionProperties) {
-        this.taskExecutionProperties = taskExecutionProperties;
-    }
 
     @Override
     @Bean(name = "taskExecutor")
     public Executor getAsyncExecutor() {
-        log.debug("Creating Async Task Executor");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(taskExecutionProperties.getPool().getCoreSize());
         executor.setMaxPoolSize(taskExecutionProperties.getPool().getMaxSize());

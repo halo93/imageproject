@@ -1,56 +1,24 @@
 package com.company.imageproject;
 
 import com.company.imageproject.config.ApplicationProperties;
-
 import io.github.jhipster.config.DefaultProfileUtil;
-import io.github.jhipster.config.JHipsterConstants;
-
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 
-import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.Collection;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
+@RequiredArgsConstructor
 public class ImageprojectApp {
 
-    private static final Logger log = LoggerFactory.getLogger(ImageprojectApp.class);
-
     private final Environment env;
-
-    public ImageprojectApp(Environment env) {
-        this.env = env;
-    }
-
-    /**
-     * Initializes imageproject.
-     * <p>
-     * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
-     * <p>
-     * You can find more information on how profiles work with JHipster on <a href="https://www.jhipster.tech/profiles/">https://www.jhipster.tech/profiles/</a>.
-     */
-    @PostConstruct
-    public void initApplication() {
-        Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
-            log.error("You have misconfigured your application! It should not run " +
-                "with both the 'dev' and 'prod' profiles at the same time.");
-        }
-        if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_CLOUD)) {
-            log.error("You have misconfigured your application! It should not " +
-                "run with both the 'dev' and 'cloud' profiles at the same time.");
-        }
-    }
 
     /**
      * Main method, used to run the application.
@@ -78,13 +46,12 @@ public class ImageprojectApp {
         try {
             hostAddress = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
-            log.warn("The host name could not be determined, using `localhost` as fallback");
+            System.out.println("[WARN] The host name could not be determined, using `localhost` as fallback");
         }
-        log.info("\n----------------------------------------------------------\n\t" +
-                "Application '{}' is running! Access URLs:\n\t" +
-                "Local: \t\t{}://localhost:{}{}\n\t" +
-                "External: \t{}://{}:{}{}\n\t" +
-                "Profile(s): \t{}\n----------------------------------------------------------",
+        System.out.println(String.format("\n----------------------------------------------------------\n\t" +
+                "Application '%s' is running! Access URLs:\n\t" +
+                "Local: \t\t%s://localhost:%s%s\n\t" +
+                "External: \t%s://%s:%s%s\n\t",
             env.getProperty("spring.application.name"),
             protocol,
             serverPort,
@@ -92,7 +59,6 @@ public class ImageprojectApp {
             protocol,
             hostAddress,
             serverPort,
-            contextPath,
-            env.getActiveProfiles());
+            contextPath));
     }
 }
