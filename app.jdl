@@ -2,8 +2,7 @@ entity Image (images) {
   path String maxlength(200),
   pictureDescription String maxlength(500),
   fileType String maxlength(100),
-  size BigDecimal required min(1) max(500000),
-  isActive Boolean required
+  size BigDecimal required min(1) max(500000)
 }
 
 dto * with mapstruct

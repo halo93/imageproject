@@ -47,22 +47,10 @@ spring:
       hibernate.generate_statistics: false
       hibernate.hbm2ddl.auto: validate
       hibernate.jdbc.time_zone: UTC
-  data:
-    elasticsearch:
-      properties:
-        path:
-          home: target/elasticsearch
-        # See https://github.com/jhipster/generator-jhipster/issues/10302
-        node:
-          max_local_storage_nodes: 2
   liquibase:
     contexts: test
-  mail:
-    host: localhost
   main:
     allow-bean-definition-overriding: true
-  messages:
-    basename: i18n/messages
   task:
     execution:
       thread-name-prefix: imageproject-task-
@@ -93,25 +81,6 @@ jhipster:
   logging:
     # To test json console appender
     use-json-format: false
-    logstash:
-      enabled: false
-      host: localhost
-      port: 5000
-      queue-size: 512
-  mail:
-    from: test@localhost
-    base-url: http://127.0.0.1:8080
-  security:
-    authentication:
-      jwt:
-        # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: ODFiNGJiYmQ5YzE5YjlmNmUwZjAxZmJlYTAxOWYwZmFhZGM0ZTgwNzhhOTY3NDE2MzFlNTNkZDBjYWUzYWQxNDQ0N2ZiZTIwNDg5ZmY1MmM3MjA3YmVmNjlmNzAyMWVlMjg0NTQ3MGFjYmMzOTY5MzJkZWFkMjM4YzMwNWNmMDI=
-        # Token is valid 24 hours
-        token-validity-in-seconds: 86400
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: true
-      report-frequency: 60 # in seconds
 
 # ===================================================================
 # Application specific properties

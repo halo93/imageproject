@@ -35,13 +35,6 @@
       ],
       "fieldValidateRulesMin": "1",
       "fieldValidateRulesMax": "500000"
-    },
-    {
-      "fieldName": "isActive",
-      "fieldType": "Boolean",
-      "fieldValidateRules": [
-        "required"
-      ]
     }
   ],
   "relationships": [],

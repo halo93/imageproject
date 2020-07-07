@@ -5,7 +5,7 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-image" [routerLink]="['/image/new']">
             <fa-icon icon="plus"></fa-icon>
             <span class="hidden-sm-down">
-            Create a new Image
+            Upload a new Image
             </span>
         </button>
     </h2>
@@ -40,22 +40,20 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="path"><span>Path</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="pictureDescription"><span>Picture Description</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="fileType"><span>File Type</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="size"><span>Size</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="isActive"><span>Is Active</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"><span>ID</span></th>
+                    <th scope="col"><span>Path</span></th>
+                    <th scope="col"><span>Picture Description</span></th>
+                    <th scope="col"><span>File Type</span></th>
+                    <th scope="col"><span>Size</span></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let image of images ;trackBy: trackId">
-                    <td><a [routerLink]="['/image', image.id, 'view']">{{ image.id }}</a></td>
+                    <td>{{ image.id }}</td>
                     <td>{{ image.path }}</td>
                     <td>{{ image.pictureDescription }}</td>
                     <td>{{ image.fileType }}</td>
                     <td>{{ image.size }}</td>
-                    <td>{{ image.isActive }}</td>
                 </tr>
             </tbody>
         </table>

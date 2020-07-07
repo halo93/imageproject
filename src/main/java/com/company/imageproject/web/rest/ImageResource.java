@@ -55,26 +55,6 @@ public class ImageResource {
     }
 
     /**
-     * {@code PUT  /images} : Updates an existing image.
-     *
-     * @param imageDTO the imageDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated imageDTO,
-     * or with status {@code 400 (Bad Request)} if the imageDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the imageDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/images")
-    public ResponseEntity<ImageDTO> updateImage(@Valid @RequestBody ImageDTO imageDTO) throws URISyntaxException {
-        if (imageDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        ImageDTO result = imageService.save(imageDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, imageDTO.getId().toString()))
-            .body(result);
-    }
-
-    /**
      * {@code GET  /images} : get all the images.
      *
      * @param pageable the pagination information.
@@ -87,38 +67,6 @@ public class ImageResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-    /**
-     * {@code GET  /images/:id} : get the "id" image.
-     *
-     * @param id the id of the imageDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the imageDTO, or with status {@code 404 (Not Found)}.
-     */
-    @GetMapping("/images/{id}")
-    public ResponseEntity<ImageDTO> getImage(@PathVariable Long id) {
-        Optional<ImageDTO> imageDTO = imageService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(imageDTO);
-    }
-
-    /**
-     * {@code DELETE  /images/:id} : delete the "id" image.
-     *
-     * @param id the id of the imageDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @DeleteMapping("/images/{id}")
-    public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
-        imageService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
-     * {@code SEARCH  /_search/images?query=:query} : search for the image corresponding
-     * to the query.
-     *
-     * @param query the query of the image search.
-     * @param pageable the pagination information.
-     * @return the result of the search.
-     */
     @GetMapping("/_search/images")
     public ResponseEntity<List<ImageDTO>> searchImages(@RequestParam String query, Pageable pageable) {
         Page<ImageDTO> page = imageService.search(query, pageable);

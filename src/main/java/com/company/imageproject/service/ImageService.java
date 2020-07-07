@@ -55,28 +55,6 @@ public class ImageService {
 
 
     /**
-     * Get one image by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    @Transactional(readOnly = true)
-    public Optional<ImageDTO> findOne(Long id) {
-        return imageRepository.findById(id)
-            .map(imageMapper::toDto);
-    }
-
-    /**
-     * Delete the image by id.
-     *
-     * @param id the id of the entity.
-     */
-    public void delete(Long id) {
-        imageRepository.deleteById(id);
-        imageSearchRepository.deleteById(id);
-    }
-
-    /**
      * Search for the image corresponding to the query.
      *
      * @param query the query of the search.

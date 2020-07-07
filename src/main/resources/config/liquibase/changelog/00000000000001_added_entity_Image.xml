@@ -28,9 +28,6 @@
             <column name="size" type="decimal(21,2)">
                 <constraints nullable="false" />
             </column>
-            <column name="is_active" type="boolean">
-                <constraints nullable="false" />
-            </column>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

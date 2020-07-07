@@ -71,10 +71,6 @@ jhipster:
     exposed-headers: 'Link,X-Total-Count'
     allow-credentials: true
     max-age: 1800
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: false
-      report-frequency: 60 # in seconds
   logging:
     use-json-format: false # By default, logs are not in Json format
 

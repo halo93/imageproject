@@ -4,7 +4,6 @@ export interface IImage {
   pictureDescription?: string;
   fileType?: string;
   size?: number;
-  isActive?: boolean;
 }
 
 export class Image implements IImage {
@@ -13,9 +12,6 @@ export class Image implements IImage {
     public path?: string,
     public pictureDescription?: string,
     public fileType?: string,
-    public size?: number,
-    public isActive?: boolean
-  ) {
-    this.isActive = this.isActive || false;
-  }
+    public size?: number
+  ) {}
 }

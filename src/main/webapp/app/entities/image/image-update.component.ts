@@ -21,7 +21,6 @@ export class ImageUpdateComponent implements OnInit {
     pictureDescription: [null, [Validators.maxLength(500)]],
     fileType: [null, [Validators.maxLength(100)]],
     size: [null, [Validators.required, Validators.min(1), Validators.max(500000)]],
-    isActive: [null, [Validators.required]],
   });
 
   constructor(protected imageService: ImageService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -39,7 +38,6 @@ export class ImageUpdateComponent implements OnInit {
       pictureDescription: image.pictureDescription,
       fileType: image.fileType,
       size: image.size,
-      isActive: image.isActive,
     });
   }
 
@@ -65,7 +63,6 @@ export class ImageUpdateComponent implements OnInit {
       pictureDescription: this.editForm.get(['pictureDescription'])!.value,
       fileType: this.editForm.get(['fileType'])!.value,
       size: this.editForm.get(['size'])!.value,
-      isActive: this.editForm.get(['isActive'])!.value,
     };
   }
 

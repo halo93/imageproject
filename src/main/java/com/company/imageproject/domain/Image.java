@@ -42,10 +42,6 @@ public class Image extends AbstractAuditingEntity {
     @Column(name = "size", precision = 21, scale = 2, nullable = false)
     private BigDecimal size;
 
-    @NotNull
-    @Column(name = "is_active", nullable = false)
-    private Boolean isActive;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -107,18 +103,6 @@ public class Image extends AbstractAuditingEntity {
         this.size = size;
     }
 
-    public Boolean isIsActive() {
-        return isActive;
-    }
-
-    public Image isActive(Boolean isActive) {
-        this.isActive = isActive;
-        return this;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -146,7 +130,6 @@ public class Image extends AbstractAuditingEntity {
             ", pictureDescription='" + getPictureDescription() + "'" +
             ", fileType='" + getFileType() + "'" +
             ", size=" + getSize() +
-            ", isActive='" + isIsActive() + "'" +
             "}";
     }
 }

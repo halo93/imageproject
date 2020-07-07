@@ -60,25 +60,6 @@ public class ExceptionTranslatorIT {
     }
 
     @Test
-    public void testAccessDenied() throws Exception {
-        mockMvc.perform(get("/api/exception-translator-test/access-denied"))
-            .andExpect(status().isForbidden())
-            .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
-            .andExpect(jsonPath("$.message").value("error.http.403"))
-            .andExpect(jsonPath("$.detail").value("test access denied!"));
-    }
-
-    @Test
-    public void testUnauthorized() throws Exception {
-        mockMvc.perform(get("/api/exception-translator-test/unauthorized"))
-            .andExpect(status().isUnauthorized())
-            .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
-            .andExpect(jsonPath("$.message").value("error.http.401"))
-            .andExpect(jsonPath("$.path").value("/api/exception-translator-test/unauthorized"))
-            .andExpect(jsonPath("$.detail").value("test authentication failed!"));
-    }
-
-    @Test
     public void testMethodNotSupported() throws Exception {
         mockMvc.perform(post("/api/exception-translator-test/access-denied"))
             .andExpect(status().isMethodNotAllowed())

@@ -28,10 +28,6 @@ public class ImageDTO implements Serializable {
     @DecimalMax(value = "500000")
     private BigDecimal size;
 
-    @NotNull
-    private Boolean isActive;
-
-
     public Long getId() {
         return id;
     }
@@ -72,14 +68,6 @@ public class ImageDTO implements Serializable {
         this.size = size;
     }
 
-    public Boolean isIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -106,7 +94,6 @@ public class ImageDTO implements Serializable {
             ", pictureDescription='" + getPictureDescription() + "'" +
             ", fileType='" + getFileType() + "'" +
             ", size=" + getSize() +
-            ", isActive='" + isIsActive() + "'" +
             "}";
     }
 }

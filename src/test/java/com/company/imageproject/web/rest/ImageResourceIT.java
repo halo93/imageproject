@@ -52,9 +52,6 @@ public class ImageResourceIT {
     private static final BigDecimal DEFAULT_SIZE = new BigDecimal(1);
     private static final BigDecimal UPDATED_SIZE = new BigDecimal(2);
 
-    private static final Boolean DEFAULT_IS_ACTIVE = false;
-    private static final Boolean UPDATED_IS_ACTIVE = true;
-
     @Autowired
     private ImageRepository imageRepository;
 
@@ -91,8 +88,7 @@ public class ImageResourceIT {
             .path(DEFAULT_PATH)
             .pictureDescription(DEFAULT_PICTURE_DESCRIPTION)
             .fileType(DEFAULT_FILE_TYPE)
-            .size(DEFAULT_SIZE)
-            .isActive(DEFAULT_IS_ACTIVE);
+            .size(DEFAULT_SIZE);
         return image;
     }
     /**
@@ -106,8 +102,7 @@ public class ImageResourceIT {
             .path(UPDATED_PATH)
             .pictureDescription(UPDATED_PICTURE_DESCRIPTION)
             .fileType(UPDATED_FILE_TYPE)
-            .size(UPDATED_SIZE)
-            .isActive(UPDATED_IS_ACTIVE);
+            .size(UPDATED_SIZE);
         return image;
     }
 
@@ -135,7 +130,6 @@ public class ImageResourceIT {
         assertThat(testImage.getPictureDescription()).isEqualTo(DEFAULT_PICTURE_DESCRIPTION);
         assertThat(testImage.getFileType()).isEqualTo(DEFAULT_FILE_TYPE);
         assertThat(testImage.getSize()).isEqualTo(DEFAULT_SIZE);
-        assertThat(testImage.isIsActive()).isEqualTo(DEFAULT_IS_ACTIVE);
 
         // Validate the Image in Elasticsearch
         verify(mockImageSearchRepository, times(1)).save(testImage);
@@ -187,26 +181,6 @@ public class ImageResourceIT {
 
     @Test
     @Transactional
-    public void checkIsActiveIsRequired() throws Exception {
-        int databaseSizeBeforeTest = imageRepository.findAll().size();
-        // set the field null
-        image.setIsActive(null);
-
-        // Create the Image, which fails.
-        ImageDTO imageDTO = imageMapper.toDto(image);
-
-
-        restImageMockMvc.perform(post("/api/images")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(imageDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Image> imageList = imageRepository.findAll();
-        assertThat(imageList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllImages() throws Exception {
         // Initialize the database
         imageRepository.saveAndFlush(image);
@@ -219,115 +193,7 @@ public class ImageResourceIT {
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
             .andExpect(jsonPath("$.[*].pictureDescription").value(hasItem(DEFAULT_PICTURE_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].fileType").value(hasItem(DEFAULT_FILE_TYPE)))
-            .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE.intValue())))
-            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())));
-    }
-
-    @Test
-    @Transactional
-    public void getImage() throws Exception {
-        // Initialize the database
-        imageRepository.saveAndFlush(image);
-
-        // Get the image
-        restImageMockMvc.perform(get("/api/images/{id}", image.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(image.getId().intValue()))
-            .andExpect(jsonPath("$.path").value(DEFAULT_PATH))
-            .andExpect(jsonPath("$.pictureDescription").value(DEFAULT_PICTURE_DESCRIPTION))
-            .andExpect(jsonPath("$.fileType").value(DEFAULT_FILE_TYPE))
-            .andExpect(jsonPath("$.size").value(DEFAULT_SIZE.intValue()))
-            .andExpect(jsonPath("$.isActive").value(DEFAULT_IS_ACTIVE.booleanValue()));
-    }
-    @Test
-    @Transactional
-    public void getNonExistingImage() throws Exception {
-        // Get the image
-        restImageMockMvc.perform(get("/api/images/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
-    }
-
-    @Test
-    @Transactional
-    public void updateImage() throws Exception {
-        // Initialize the database
-        imageRepository.saveAndFlush(image);
-
-        int databaseSizeBeforeUpdate = imageRepository.findAll().size();
-
-        // Update the image
-        Image updatedImage = imageRepository.findById(image.getId()).get();
-        // Disconnect from session so that the updates on updatedImage are not directly saved in db
-        em.detach(updatedImage);
-        updatedImage
-            .path(UPDATED_PATH)
-            .pictureDescription(UPDATED_PICTURE_DESCRIPTION)
-            .fileType(UPDATED_FILE_TYPE)
-            .size(UPDATED_SIZE)
-            .isActive(UPDATED_IS_ACTIVE);
-        ImageDTO imageDTO = imageMapper.toDto(updatedImage);
-
-        restImageMockMvc.perform(put("/api/images")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(imageDTO)))
-            .andExpect(status().isOk());
-
-        // Validate the Image in the database
-        List<Image> imageList = imageRepository.findAll();
-        assertThat(imageList).hasSize(databaseSizeBeforeUpdate);
-        Image testImage = imageList.get(imageList.size() - 1);
-        assertThat(testImage.getPath()).isEqualTo(UPDATED_PATH);
-        assertThat(testImage.getPictureDescription()).isEqualTo(UPDATED_PICTURE_DESCRIPTION);
-        assertThat(testImage.getFileType()).isEqualTo(UPDATED_FILE_TYPE);
-        assertThat(testImage.getSize()).isEqualTo(UPDATED_SIZE);
-        assertThat(testImage.isIsActive()).isEqualTo(UPDATED_IS_ACTIVE);
-
-        // Validate the Image in Elasticsearch
-        verify(mockImageSearchRepository, times(1)).save(testImage);
-    }
-
-    @Test
-    @Transactional
-    public void updateNonExistingImage() throws Exception {
-        int databaseSizeBeforeUpdate = imageRepository.findAll().size();
-
-        // Create the Image
-        ImageDTO imageDTO = imageMapper.toDto(image);
-
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restImageMockMvc.perform(put("/api/images")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(imageDTO)))
-            .andExpect(status().isBadRequest());
-
-        // Validate the Image in the database
-        List<Image> imageList = imageRepository.findAll();
-        assertThat(imageList).hasSize(databaseSizeBeforeUpdate);
-
-        // Validate the Image in Elasticsearch
-        verify(mockImageSearchRepository, times(0)).save(image);
-    }
-
-    @Test
-    @Transactional
-    public void deleteImage() throws Exception {
-        // Initialize the database
-        imageRepository.saveAndFlush(image);
-
-        int databaseSizeBeforeDelete = imageRepository.findAll().size();
-
-        // Delete the image
-        restImageMockMvc.perform(delete("/api/images/{id}", image.getId())
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
-
-        // Validate the database contains one less item
-        List<Image> imageList = imageRepository.findAll();
-        assertThat(imageList).hasSize(databaseSizeBeforeDelete - 1);
-
-        // Validate the Image in Elasticsearch
-        verify(mockImageSearchRepository, times(1)).deleteById(image.getId());
+            .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE.intValue())));
     }
 
     @Test
@@ -347,7 +213,6 @@ public class ImageResourceIT {
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
             .andExpect(jsonPath("$.[*].pictureDescription").value(hasItem(DEFAULT_PICTURE_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].fileType").value(hasItem(DEFAULT_FILE_TYPE)))
-            .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE.intValue())))
-            .andExpect(jsonPath("$.[*].isActive").value(hasItem(DEFAULT_IS_ACTIVE.booleanValue())));
+            .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE.intValue())));
     }
 }
