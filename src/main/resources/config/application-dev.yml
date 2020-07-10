@@ -86,3 +86,7 @@ jhipster:
 application:
   elasticsearch:
     host: https://search-imageproject-37fk57mamgbuhltwif2xdeuuti.us-west-1.es.amazonaws.com
+
+company:
+  fileStorage:
+    bucketName: 'longimageproject'

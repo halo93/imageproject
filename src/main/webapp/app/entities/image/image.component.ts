@@ -1,94 +1,112 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
-import { Subscription, combineLatest } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IImage } from 'app/shared/model/image.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ImageService } from './image.service';
+import { ImageUploadDialogComponent } from 'app/entities/image/image-upload-dialog.component';
 
 @Component({
   selector: 'jhi-image',
+  styles: [
+    `
+      .search-results {
+        height: 100%;
+        overflow: scroll;
+      }
+    `,
+  ],
   templateUrl: './image.component.html',
 })
 export class ImageComponent implements OnInit, OnDestroy {
-  images?: IImage[];
+  images: IImage[];
   eventSubscriber?: Subscription;
+  itemsPerPage: number;
+  links: any;
+  page: number;
+  predicate: string;
+  ascending: boolean;
   currentSearch: string;
-  totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
-  page!: number;
-  predicate!: string;
-  ascending!: boolean;
-  ngbPaginationPage = 1;
 
   constructor(
     protected imageService: ImageService,
-    protected activatedRoute: ActivatedRoute,
-    protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal,
+    protected parseLinks: JhiParseLinks,
+    protected activatedRoute: ActivatedRoute
   ) {
+    this.images = [];
+    this.itemsPerPage = ITEMS_PER_PAGE;
+    this.page = 0;
+    this.links = {
+      last: 0,
+    };
+    this.predicate = 'id';
+    this.ascending = true;
     this.currentSearch =
       this.activatedRoute.snapshot && this.activatedRoute.snapshot.queryParams['search']
         ? this.activatedRoute.snapshot.queryParams['search']
         : '';
   }
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
-    const pageToLoad: number = page || this.page || 1;
-
+  loadAll(): void {
     if (this.currentSearch) {
       this.imageService
         .search({
-          page: pageToLoad - 1,
           query: this.currentSearch,
+          page: this.page,
           size: this.itemsPerPage,
           sort: this.sort(),
         })
-        .subscribe(
-          (res: HttpResponse<IImage[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-          () => this.onError()
-        );
+        .subscribe((res: HttpResponse<IImage[]>) => this.paginateImages(res.body, res.headers));
       return;
     }
 
     this.imageService
       .query({
-        page: pageToLoad - 1,
+        page: this.page,
         size: this.itemsPerPage,
         sort: this.sort(),
       })
-      .subscribe(
-        (res: HttpResponse<IImage[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-        () => this.onError()
-      );
+      .subscribe((res: HttpResponse<IImage[]>) => this.paginateImages(res.body, res.headers));
+  }
+
+  reset(): void {
+    this.page = 0;
+    this.images = [];
+    this.loadAll();
+  }
+
+  loadPage(page: number): void {
+    this.page = page;
+    this.loadAll();
   }
 
   search(query: string): void {
+    this.images = [];
+    this.links = {
+      last: 0,
+    };
+    this.page = 0;
+    if (query) {
+      this.predicate = '_score';
+      this.ascending = false;
+    } else {
+      this.predicate = 'id';
+      this.ascending = true;
+    }
     this.currentSearch = query;
-    this.loadPage(1);
+    this.loadAll();
   }
 
   ngOnInit(): void {
-    this.handleNavigation();
+    this.loadAll();
     this.registerChangeInImages();
-  }
-
-  protected handleNavigation(): void {
-    combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
-      const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
-      const sort = (params.get('sort') ?? data['defaultSort']).split(',');
-      const predicate = sort[0];
-      const ascending = sort[1] === 'asc';
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
-        this.predicate = predicate;
-        this.ascending = ascending;
-        this.loadPage(pageNumber, true);
-      }
-    }).subscribe();
   }
 
   ngOnDestroy(): void {
@@ -103,7 +121,11 @@ export class ImageComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInImages(): void {
-    this.eventSubscriber = this.eventManager.subscribe('imageListModification', () => this.loadPage());
+    this.eventSubscriber = this.eventManager.subscribe('imageListModification', () => this.reset());
+  }
+
+  openUploadModal(): void {
+    this.modalService.open(ImageUploadDialogComponent, { size: 'lg', backdrop: 'static' });
   }
 
   sort(): string[] {
@@ -114,25 +136,13 @@ export class ImageComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected onSuccess(data: IImage[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
-    this.page = page;
-    this.ngbPaginationPage = this.page;
-    if (navigate) {
-      this.router.navigate(['/image'], {
-        queryParams: {
-          page: this.page,
-          size: this.itemsPerPage,
-          search: this.currentSearch,
-          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
-        },
-      });
+  protected paginateImages(data: IImage[] | null, headers: HttpHeaders): void {
+    const headersLink = headers.get('link');
+    this.links = this.parseLinks.parse(headersLink ? headersLink : '');
+    if (data) {
+      for (let i = 0; i < data.length; i++) {
+        this.images.push(data[i]);
+      }
     }
-    this.images = data || [];
-    this.ngbPaginationPage = this.page;
-  }
-
-  protected onError(): void {
-    this.ngbPaginationPage = this.page ?? 1;
   }
 }

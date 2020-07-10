@@ -7,6 +7,8 @@ import { ImageprojectCoreModule } from 'app/core/core.module';
 import { ImageprojectAppRoutingModule } from './app-routing.module';
 import { ImageprojectHomeModule } from './home/home.module';
 import { ImageprojectEntityModule } from './entities/entity.module';
+import { DocsModule } from './docs/docs.module';
+
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -19,6 +21,7 @@ import { ErrorComponent } from './layouts/error/error.component';
     ImageprojectSharedModule,
     ImageprojectCoreModule,
     ImageprojectHomeModule,
+    DocsModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     ImageprojectEntityModule,
     ImageprojectAppRoutingModule,

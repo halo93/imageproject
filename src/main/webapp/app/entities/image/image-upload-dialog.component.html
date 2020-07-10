@@ -1,0 +1,37 @@
+<form name="uploadForm" role="form" novalidate [formGroup]="uploadForm" (ngSubmit)="uploadForm.valid && confirmUpload(uploadForm.value)">
+    <div class="modal-header">
+        <h4 class="modal-title">Upload a new image</h4>
+
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group">
+            <label class="form-control-label" for="field_description">Description</label>
+            <input type="text" class="form-control" name="path" id="field_description"
+                   formControlName="description"/>
+            <div *ngIf="uploadForm.get('description')!.invalid && (uploadForm.get('description')!.dirty || uploadForm.get('description')!.touched)">
+                <small class="form-text text-danger"
+                       *ngIf="uploadForm.get('description')?.errors?.maxlength">
+                    This field cannot be longer than 500 characters.
+                </small>
+                <small class="form-text text-danger"
+                       *ngIf="uploadForm.get('description')?.errors?.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!uploadForm.valid">
+            <fa-icon icon="file-upload"></fa-icon>&nbsp;<span>Upload</span>
+        </button>
+    </div>
+</form>

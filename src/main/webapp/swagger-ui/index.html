@@ -45,15 +45,7 @@
                 ],
                 plugins: [
                     SwaggerUIBundle.plugins.DownloadUrl
-                ],
-                requestInterceptor: function (req) {
-                    var authToken = JSON.parse(localStorage.getItem("jhi-authenticationtoken")
-                        || sessionStorage.getItem("jhi-authenticationtoken"));
-                    if (authToken) {
-                        req.headers['Authorization'] = "Bearer " + authToken;
-                    }
-                    return req;
-                }
+                ]
             });
 
             window.ui = ui

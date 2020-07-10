@@ -4,70 +4,49 @@ import com.company.imageproject.ImageprojectApp;
 import com.company.imageproject.domain.Image;
 import com.company.imageproject.repository.ImageRepository;
 import com.company.imageproject.repository.search.ImageSearchRepository;
-import com.company.imageproject.service.ImageService;
-import com.company.imageproject.service.dto.ImageDTO;
-import com.company.imageproject.service.mapper.ImageMapper;
-
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for the {@link ImageResource} REST controller.
  */
 @SpringBootTest(classes = ImageprojectApp.class)
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class ImageResourceIT {
 
     private static final String DEFAULT_PATH = "AAAAAAAAAA";
-    private static final String UPDATED_PATH = "BBBBBBBBBB";
-
-    private static final String DEFAULT_PICTURE_DESCRIPTION = "AAAAAAAAAA";
-    private static final String UPDATED_PICTURE_DESCRIPTION = "BBBBBBBBBB";
-
-    private static final String DEFAULT_FILE_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_FILE_TYPE = "BBBBBBBBBB";
-
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String SUPPORTED_FILE_TYPE_JPEG = "image/jpeg";
+    private static final String SUPPORTED_FILE_TYPE_PNG = "image/png";
+    private static final String UNSUPPORTED_FILE_TYPE = "image/gif";
     private static final BigDecimal DEFAULT_SIZE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_SIZE = new BigDecimal(2);
 
     @Autowired
     private ImageRepository imageRepository;
 
     @Autowired
-    private ImageMapper imageMapper;
-
-    @Autowired
-    private ImageService imageService;
-
-    /**
-     * This repository is mocked in the com.company.imageproject.repository.search test package.
-     *
-     * @see com.company.imageproject.repository.search.ImageSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private ImageSearchRepository mockImageSearchRepository;
+    private ImageSearchRepository imageSearchRepository;
 
     @Autowired
     private EntityManager em;
@@ -86,23 +65,9 @@ public class ImageResourceIT {
     public static Image createEntity(EntityManager em) {
         Image image = new Image()
             .path(DEFAULT_PATH)
-            .pictureDescription(DEFAULT_PICTURE_DESCRIPTION)
-            .fileType(DEFAULT_FILE_TYPE)
+            .description(DEFAULT_DESCRIPTION)
+            .fileType(SUPPORTED_FILE_TYPE_JPEG)
             .size(DEFAULT_SIZE);
-        return image;
-    }
-    /**
-     * Create an updated entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Image createUpdatedEntity(EntityManager em) {
-        Image image = new Image()
-            .path(UPDATED_PATH)
-            .pictureDescription(UPDATED_PICTURE_DESCRIPTION)
-            .fileType(UPDATED_FILE_TYPE)
-            .size(UPDATED_SIZE);
         return image;
     }
 
@@ -113,67 +78,64 @@ public class ImageResourceIT {
 
     @Test
     @Transactional
-    public void createImage() throws Exception {
+    public void shouldResponse201_WhenUploadImage_WithValidJpegFileAndDescription() throws Exception {
         int databaseSizeBeforeCreate = imageRepository.findAll().size();
         // Create the Image
-        ImageDTO imageDTO = imageMapper.toDto(image);
-        restImageMockMvc.perform(post("/api/images")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(imageDTO)))
-            .andExpect(status().isCreated());
+        final byte[] fileContent = "data".getBytes();
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("uploadedImage", "original_filename.jpeg", SUPPORTED_FILE_TYPE_JPEG, fileContent);
+
+        restImageMockMvc.perform(
+            MockMvcRequestBuilders.multipart("/api/images")
+                .file(mockMultipartFile)
+                .param("description", DEFAULT_DESCRIPTION)
+        ).andExpect(status().isCreated());
 
         // Validate the Image in the database
         List<Image> imageList = imageRepository.findAll();
         assertThat(imageList).hasSize(databaseSizeBeforeCreate + 1);
         Image testImage = imageList.get(imageList.size() - 1);
-        assertThat(testImage.getPath()).isEqualTo(DEFAULT_PATH);
-        assertThat(testImage.getPictureDescription()).isEqualTo(DEFAULT_PICTURE_DESCRIPTION);
-        assertThat(testImage.getFileType()).isEqualTo(DEFAULT_FILE_TYPE);
-        assertThat(testImage.getSize()).isEqualTo(DEFAULT_SIZE);
-
-        // Validate the Image in Elasticsearch
-        verify(mockImageSearchRepository, times(1)).save(testImage);
+        assertThat(testImage.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testImage.getFileType()).isEqualTo(SUPPORTED_FILE_TYPE_JPEG);
+        assertThat(testImage.getSize()).isEqualTo(BigDecimal.valueOf(fileContent.length));
     }
 
     @Test
     @Transactional
-    public void createImageWithExistingId() throws Exception {
+    public void shouldResponse201_WhenUploadImage_WithValidPngFileAndDescription() throws Exception {
         int databaseSizeBeforeCreate = imageRepository.findAll().size();
+        // Create the Image
+        final byte[] fileContent = "data".getBytes();
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("uploadedImage", "original_filename.png", SUPPORTED_FILE_TYPE_PNG, fileContent);
 
-        // Create the Image with an existing ID
-        image.setId(1L);
-        ImageDTO imageDTO = imageMapper.toDto(image);
-
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restImageMockMvc.perform(post("/api/images")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(imageDTO)))
-            .andExpect(status().isBadRequest());
+        restImageMockMvc.perform(
+            MockMvcRequestBuilders.multipart("/api/images")
+                .file(mockMultipartFile)
+                .param("description", DEFAULT_DESCRIPTION)
+        ).andExpect(status().isCreated());
 
         // Validate the Image in the database
         List<Image> imageList = imageRepository.findAll();
-        assertThat(imageList).hasSize(databaseSizeBeforeCreate);
-
-        // Validate the Image in Elasticsearch
-        verify(mockImageSearchRepository, times(0)).save(image);
+        assertThat(imageList).hasSize(databaseSizeBeforeCreate + 1);
+        Image testImage = imageList.get(imageList.size() - 1);
+        assertThat(testImage.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testImage.getFileType()).isEqualTo(SUPPORTED_FILE_TYPE_PNG);
+        assertThat(testImage.getSize()).isEqualTo(BigDecimal.valueOf(fileContent.length));
     }
-
 
     @Test
     @Transactional
-    public void checkSizeIsRequired() throws Exception {
+    public void shouldResponse400_WhenUploadImage_WithUnsupportedFile() throws Exception {
         int databaseSizeBeforeTest = imageRepository.findAll().size();
-        // set the field null
-        image.setSize(null);
 
-        // Create the Image, which fails.
-        ImageDTO imageDTO = imageMapper.toDto(image);
+        // Create the Image
+        final byte[] fileContent = "data".getBytes();
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("uploadedImage", "original_filename.gif", UNSUPPORTED_FILE_TYPE, fileContent);
 
-
-        restImageMockMvc.perform(post("/api/images")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(imageDTO)))
-            .andExpect(status().isBadRequest());
+        restImageMockMvc.perform(
+            MockMvcRequestBuilders.multipart("/api/images")
+                .file(mockMultipartFile)
+                .param("description", DEFAULT_DESCRIPTION)
+        ).andExpect(status().isBadRequest());
 
         List<Image> imageList = imageRepository.findAll();
         assertThat(imageList).hasSize(databaseSizeBeforeTest);
@@ -181,38 +143,92 @@ public class ImageResourceIT {
 
     @Test
     @Transactional
-    public void getAllImages() throws Exception {
+    public void shouldResponse400_WhenUploadImage_WithNoDescription() throws Exception {
+        int databaseSizeBeforeTest = imageRepository.findAll().size();
+
+        // Create the Image
+        final byte[] fileContent = "data".getBytes();
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("uploadedImage", "original_filename.png", SUPPORTED_FILE_TYPE_PNG, fileContent);
+
+        restImageMockMvc.perform(
+            MockMvcRequestBuilders.multipart("/api/images")
+                .file(mockMultipartFile)
+        ).andExpect(status().isBadRequest());
+
+        List<Image> imageList = imageRepository.findAll();
+        assertThat(imageList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void shouldResponse400_WhenUploadImage_WithExceededFileSize() throws Exception {
+        // Create the Image
+        final byte[] fileContent = new byte[500001];
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("uploadedImage", "original_filename.png", SUPPORTED_FILE_TYPE_PNG, fileContent);
+
+        restImageMockMvc.perform(
+            MockMvcRequestBuilders.multipart("/api/images")
+                .file(mockMultipartFile)
+                .param("description", DEFAULT_DESCRIPTION)
+        ).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void shouldResponse200_WhenGetAllImages() throws Exception {
         // Initialize the database
         imageRepository.saveAndFlush(image);
 
         // Get all the imageList
-        restImageMockMvc.perform(get("/api/images?sort=id,desc"))
+        restImageMockMvc.perform(get("/api/images"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(image.getId().intValue())))
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
-            .andExpect(jsonPath("$.[*].pictureDescription").value(hasItem(DEFAULT_PICTURE_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].fileType").value(hasItem(DEFAULT_FILE_TYPE)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].fileType").value(hasItem(SUPPORTED_FILE_TYPE_JPEG)))
             .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE.intValue())));
     }
 
     @Test
     @Transactional
-    public void searchImage() throws Exception {
-        // Configure the mock search repository
+    public void shouldResponse200_WhenSearchImage_WithValidSearchQuery() throws Exception {
         // Initialize the database
-        imageRepository.saveAndFlush(image);
-        when(mockImageSearchRepository.search(queryStringQuery("id:" + image.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(image), PageRequest.of(0, 1), 1));
+        imageSearchRepository.save(image);
 
         // Search the image
-        restImageMockMvc.perform(get("/api/_search/images?query=id:" + image.getId()))
+        restImageMockMvc.perform(get("/api/_search/images?query=path:" + DEFAULT_PATH))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(image.getId().intValue())))
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
-            .andExpect(jsonPath("$.[*].pictureDescription").value(hasItem(DEFAULT_PICTURE_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].fileType").value(hasItem(DEFAULT_FILE_TYPE)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].fileType").value(hasItem(SUPPORTED_FILE_TYPE_JPEG)))
             .andExpect(jsonPath("$.[*].size").value(hasItem(DEFAULT_SIZE.intValue())));
     }
+
+    @Test
+    @Transactional
+    public void shouldResponse500_WhenSearchImage_WithInvalidSearchQuery() throws Exception {
+        // Initialize the database
+        imageSearchRepository.save(image);
+
+        // Search the image
+        restImageMockMvc.perform(get("/api/_search/images?query=:" + DEFAULT_PATH))
+            .andExpect(status().isInternalServerError());
+
+    }
+
+    @Test
+    @Transactional
+    public void shouldResponse200WithEmptyResponse_WhenSearchImage_WithNotExistSearchQuery() throws Exception {
+        // Initialize the database
+        imageSearchRepository.save(image);
+
+        // Search the image
+        restImageMockMvc.perform(get("/api/_search/images?query=path:NOTEXIST"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").value(hasSize(0)));
+    }
+
 }

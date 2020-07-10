@@ -3,4 +3,16 @@
         <span class="logo-img"></span>
         <span class="navbar-title">Imageproject</span> <span class="navbar-version">{{ version }}</span>
     </a>
+    <div class="navbar-collapse collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <a class="nav-link" routerLink="/docs">
+                    <span>
+                        <fa-icon icon="folder"></fa-icon>
+                        <span>Swagger Document</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>

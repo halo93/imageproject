@@ -4,10 +4,7 @@ package com.company.imageproject.domain;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 /**
@@ -28,9 +25,10 @@ public class Image extends AbstractAuditingEntity {
     @Column(name = "path", length = 200)
     private String path;
 
+    @NotBlank
     @Size(max = 500)
-    @Column(name = "picture_description", length = 500)
-    private String pictureDescription;
+    @Column(name = "description", length = 500)
+    private String description;
 
     @Size(max = 100)
     @Column(name = "file_type", length = 100)
@@ -64,17 +62,17 @@ public class Image extends AbstractAuditingEntity {
         this.path = path;
     }
 
-    public String getPictureDescription() {
-        return pictureDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public Image pictureDescription(String pictureDescription) {
-        this.pictureDescription = pictureDescription;
+    public Image description(String description) {
+        this.description = description;
         return this;
     }
 
-    public void setPictureDescription(String pictureDescription) {
-        this.pictureDescription = pictureDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFileType() {
@@ -127,7 +125,7 @@ public class Image extends AbstractAuditingEntity {
         return "Image{" +
             "id=" + getId() +
             ", path='" + getPath() + "'" +
-            ", pictureDescription='" + getPictureDescription() + "'" +
+            ", description='" + getDescription() + "'" +
             ", fileType='" + getFileType() + "'" +
             ", size=" + getSize() +
             "}";

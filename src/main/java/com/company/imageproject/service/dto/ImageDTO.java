@@ -1,9 +1,8 @@
 package com.company.imageproject.service.dto;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse;
+
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -18,7 +17,8 @@ public class ImageDTO implements Serializable {
     private String path;
 
     @Size(max = 500)
-    private String pictureDescription;
+    @NotBlank
+    private String description;
 
     @Size(max = 100)
     private String fileType;
@@ -27,6 +27,15 @@ public class ImageDTO implements Serializable {
     @DecimalMin(value = "1")
     @DecimalMax(value = "500000")
     private BigDecimal size;
+
+    public static ImageDTO of(ImageUploadDTO imageUploadDTO, InputStreamUploadResponse inputStreamUploadResponse) {
+        ImageDTO imageDTO = new ImageDTO();
+        imageDTO.setPath(inputStreamUploadResponse.getPath());
+        imageDTO.setDescription(imageUploadDTO.getDescription());
+        imageDTO.setFileType(imageUploadDTO.getUploadedImage().getContentType());
+        imageDTO.setSize(BigDecimal.valueOf(imageUploadDTO.getUploadedImage().getSize()));
+        return imageDTO;
+    }
 
     public Long getId() {
         return id;
@@ -44,12 +53,12 @@ public class ImageDTO implements Serializable {
         this.path = path;
     }
 
-    public String getPictureDescription() {
-        return pictureDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPictureDescription(String pictureDescription) {
-        this.pictureDescription = pictureDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getFileType() {
@@ -91,7 +100,7 @@ public class ImageDTO implements Serializable {
         return "ImageDTO{" +
             "id=" + getId() +
             ", path='" + getPath() + "'" +
-            ", pictureDescription='" + getPictureDescription() + "'" +
+            ", description='" + getDescription() + "'" +
             ", fileType='" + getFileType() + "'" +
             ", size=" + getSize() +
             "}";

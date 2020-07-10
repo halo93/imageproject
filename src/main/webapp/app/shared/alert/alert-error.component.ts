@@ -44,16 +44,16 @@ export class AlertErrorComponent implements OnDestroy {
           });
           if (errorHeader) {
             this.addErrorAlert(errorHeader);
-          } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.fieldErrors) {
-            const fieldErrors = httpErrorResponse.error.fieldErrors;
-            for (const fieldError of fieldErrors) {
-              if (['Min', 'Max', 'DecimalMin', 'DecimalMax'].includes(fieldError.message)) {
-                fieldError.message = 'Size';
+          } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.violations) {
+            const violations = httpErrorResponse.error.violations;
+            for (const violation of violations) {
+              if (['Min', 'Max', 'DecimalMin', 'DecimalMax'].includes(violation.message)) {
+                violation.message = 'Size';
               }
               // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
-              const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
+              const convertedField = violation.field.replace(/\[\d*\]/g, '[]');
               const fieldName = convertedField.charAt(0).toUpperCase() + convertedField.slice(1);
-              this.addErrorAlert('Error on field "' + fieldName + '"');
+              this.addErrorAlert(`Error on field "${fieldName}": ${violation.message}`);
             }
           } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
             this.addErrorAlert(httpErrorResponse.error.message);
@@ -65,6 +65,10 @@ export class AlertErrorComponent implements OnDestroy {
 
         case 404:
           this.addErrorAlert('Not found');
+          break;
+
+        case 500:
+          this.addErrorAlert('Internal Server Error! Please try again later');
           break;
 
         default:

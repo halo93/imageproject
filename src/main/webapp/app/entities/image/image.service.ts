@@ -16,12 +16,8 @@ export class ImageService {
 
   constructor(protected http: HttpClient) {}
 
-  create(image: IImage): Observable<EntityResponseType> {
-    return this.http.post<IImage>(this.resourceUrl, image, { observe: 'response' });
-  }
-
-  update(image: IImage): Observable<EntityResponseType> {
-    return this.http.put<IImage>(this.resourceUrl, image, { observe: 'response' });
+  upload(formData: FormData): Observable<EntityResponseType> {
+    return this.http.post<IImage>(this.resourceUrl, formData, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {
@@ -31,10 +27,6 @@ export class ImageService {
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IImage[]>(this.resourceUrl, { params: options, observe: 'response' });
-  }
-
-  delete(id: number): Observable<HttpResponse<{}>> {
-    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   search(req: SearchWithPagination): Observable<EntityArrayResponseType> {

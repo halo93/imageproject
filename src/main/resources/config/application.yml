@@ -68,6 +68,9 @@ spring:
   output:
     ansi:
       console-available: true
+  servlet:
+    multipart:
+      max-file-size: 500KB
 
 server:
   servlet:

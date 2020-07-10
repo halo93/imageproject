@@ -1,11 +1,11 @@
 entity Image (images) {
   path String maxlength(200),
-  pictureDescription String maxlength(500),
+  description String maxlength(500),
   fileType String maxlength(100),
   size BigDecimal required min(1) max(500000)
 }
 
 dto * with mapstruct
-paginate * with pagination
+paginate * with infinite-scroll
 service * with serviceClass
 search * with elasticsearch

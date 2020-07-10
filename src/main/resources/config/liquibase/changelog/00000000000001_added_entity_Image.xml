@@ -19,7 +19,7 @@
             <column name="path" type="varchar(200)">
                 <constraints nullable="true" />
             </column>
-            <column name="picture_description" type="varchar(500)">
+            <column name="description" type="varchar(500)">
                 <constraints nullable="true" />
             </column>
             <column name="file_type" type="varchar(100)">

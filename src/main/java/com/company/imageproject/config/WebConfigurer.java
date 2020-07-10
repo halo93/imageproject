@@ -3,8 +3,6 @@ package com.company.imageproject.config;
 import io.github.jhipster.config.JHipsterProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.MimeMappings;
 import org.springframework.boot.web.server.WebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -19,7 +17,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;

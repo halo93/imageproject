@@ -2,8 +2,8 @@
     <h2 id="page-heading">
         <span>Images</span>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-image" [routerLink]="['/image/new']">
-            <fa-icon icon="plus"></fa-icon>
+        <button class="btn btn-primary float-right" (click)="openUploadModal()">
+            <fa-icon icon="file-upload"></fa-icon>
             <span class="hidden-sm-down">
             Upload a new Image
             </span>
@@ -39,33 +39,23 @@
     <div class="table-responsive" id="entities" *ngIf="images && images.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"><span>ID</span></th>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"><span>Path</span></th>
-                    <th scope="col"><span>Picture Description</span></th>
+                    <th scope="col"><span>Description</span></th>
                     <th scope="col"><span>File Type</span></th>
                     <th scope="col"><span>Size</span></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="search-results" infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0" [infiniteScrollThrottle]="1000">
                 <tr *ngFor="let image of images ;trackBy: trackId">
                     <td>{{ image.id }}</td>
                     <td>{{ image.path }}</td>
-                    <td>{{ image.pictureDescription }}</td>
+                    <td>{{ image.description }}</td>
                     <td>{{ image.fileType }}</td>
                     <td>{{ image.size }}</td>
                 </tr>
             </tbody>
         </table>
-    </div>
-
-    <div *ngIf="images && images.length > 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
-        </div>
     </div>
 </div>

@@ -10,7 +10,7 @@
       "fieldValidateRulesMaxlength": "200"
     },
     {
-      "fieldName": "pictureDescription",
+      "fieldName": "description",
       "fieldType": "String",
       "fieldValidateRules": [
         "maxlength"
@@ -41,7 +41,7 @@
   "changelogDate": "20200702105453",
   "entityTableName": "images",
   "dto": "mapstruct",
-  "pagination": "pagination",
+  "pagination": "infinite-scroll",
   "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,

@@ -61,6 +61,9 @@
         <aws-java-sdk.version>1.11.640</aws-java-sdk.version>
         <apache.commons-lang.version>3.10</apache.commons-lang.version>
         <lombok.version>1.18.12</lombok.version>
+        <s3Mock.version>0.2.6</s3Mock.version>
+        <embeddedElasticsearch.version>1.77</embeddedElasticsearch.version>
+        <powermock.version>2.0.2</powermock.version>
 
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
@@ -110,6 +113,23 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${apache.commons-lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.findify</groupId>
+                <artifactId>s3mock_2.13</artifactId>
+                <version>${s3Mock.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.playtika.testcontainers</groupId>
+                <artifactId>embedded-elasticsearch</artifactId>
+                <version>${embeddedElasticsearch.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
             </dependency>
             <!-- jhipster-needle-maven-add-dependency-management -->
         </dependencies>
@@ -222,9 +242,29 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5-api</artifactId>
             <version>${archunit-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.findify</groupId>
+            <artifactId>s3mock_2.13</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.playtika.testcontainers</groupId>
+            <artifactId>embedded-elasticsearch</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- Adding the engine dependency to the surefire-plugin unfortunately does not work in the current version. -->
@@ -541,6 +581,17 @@
                             </configuration>
                         </execution>
                     </executions>
+                    <configuration>
+                        <excludes>
+                            <exclude>com/company/imageproject/ImageprojectApp.class</exclude>
+                            <exclude>com/company/imageproject/config/*.class</exclude>
+                            <exclude>com/company/imageproject/aop/logging/*.class</exclude>
+                            <exclude>com/company/imageproject/domain/*.class</exclude>
+                            <exclude>com/company/imageproject/web/rest/errors/*.class</exclude>
+                            <exclude>com/company/imageproject/service/dto/*.class</exclude>
+                            <exclude>com/company/imageproject/infrastructure/blobstorage/api/*.class</exclude>
+                        </excludes>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>com.google.cloud.tools</groupId>

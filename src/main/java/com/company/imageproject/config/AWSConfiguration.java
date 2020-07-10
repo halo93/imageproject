@@ -12,6 +12,6 @@ public class AWSConfiguration {
     @Bean
     @Primary
     public AWSCredentialsProvider awsCredentialsProvider() {
-        return new DefaultAWSCredentialsProviderChain();
+        return DefaultAWSCredentialsProviderChain.getInstance();
     }
 }

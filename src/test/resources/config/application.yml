@@ -15,6 +15,7 @@
 
 spring:
   profiles:
+    active: test
   # Uncomment the following line to enable tests against production database type rather than H2, using Testcontainers
   #active: testcontainers
   application:
@@ -51,6 +52,8 @@ spring:
     contexts: test
   main:
     allow-bean-definition-overriding: true
+  messages:
+    basename: i18n/messages
   task:
     execution:
       thread-name-prefix: imageproject-task-
@@ -90,7 +93,10 @@ jhipster:
 # More documentation is available at:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
 application:
   elasticsearch:
-    host: http://dummy.elasticsearch.local
+    host: http://${embedded.elasticsearch.host}:${embedded.elasticsearch.httpPort}
+
+company:
+  fileStorage:
+    bucketName: 'longimageprojectdummy'

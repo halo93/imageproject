@@ -1,6 +1,8 @@
 package com.company.imageproject;
 
 import com.company.imageproject.config.ApplicationProperties;
+import com.company.imageproject.config.AwsProperties;
+import com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties;
 import io.github.jhipster.config.DefaultProfileUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +16,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @SpringBootApplication
-@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
+@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class, BlobStorageProperties.class, AwsProperties.class})
 @RequiredArgsConstructor
 public class ImageprojectApp {
 
