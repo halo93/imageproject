@@ -55,6 +55,8 @@ export class AlertErrorComponent implements OnDestroy {
               const fieldName = convertedField.charAt(0).toUpperCase() + convertedField.slice(1);
               this.addErrorAlert(`Error on field "${fieldName}": ${violation.message}`);
             }
+          } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.detail) {
+            this.addErrorAlert(httpErrorResponse.error.detail);
           } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
             this.addErrorAlert(httpErrorResponse.error.message);
           } else {

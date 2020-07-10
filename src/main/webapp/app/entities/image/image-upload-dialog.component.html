@@ -1,4 +1,4 @@
-<form name="uploadForm" role="form" novalidate [formGroup]="uploadForm" (ngSubmit)="uploadForm.valid && confirmUpload(uploadForm.value)">
+<form name="uploadForm" role="form" novalidate [formGroup]="uploadForm" (ngSubmit)="uploadForm.valid && uploadForm.get('uploadedImage')!.value.size <= 500000 && confirmUpload(uploadForm.value)">
     <div class="modal-header">
         <h4 class="modal-title">Upload a new image</h4>
 
@@ -15,11 +15,37 @@
             <div *ngIf="uploadForm.get('description')!.invalid && (uploadForm.get('description')!.dirty || uploadForm.get('description')!.touched)">
                 <small class="form-text text-danger"
                        *ngIf="uploadForm.get('description')?.errors?.maxlength">
-                    This field cannot be longer than 500 characters.
+                    Description cannot be longer than 500 characters.
                 </small>
                 <small class="form-text text-danger"
                        *ngIf="uploadForm.get('description')?.errors?.required">
-                    This field is required.
+                    Description is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_uploadedImage">Image</label>
+            <div>
+                <div *ngIf="uploadForm.get('uploadedImage')!.value" class="form-text text-danger clearfix">
+                    <span class="pull-left"> {{ uploadForm.get('uploadedImage')!.value.size }} Byte(s)</span>
+                    <button type="button" (click)="clearInputImage('uploadedImage', 'file_uploadedImage')" class="btn btn-secondary btn-xs pull-right">
+                        <fa-icon icon="times"></fa-icon>
+                    </button>
+                </div>
+                <input type="file" id="file_uploadedImage" (change)="setFileData($event && $event.target.files)" accept="image/jpeg, image/png" />
+            </div>
+            <input type="hidden" class="form-control" name="uploadedImage" id="field_uploadedImage"
+                   formControlName="uploadedImage"/>
+            <div *ngIf="uploadForm.get('uploadedImage')!.invalid && (uploadForm.get('uploadedImage')!.dirty || uploadForm.get('uploadedImage')!.touched)">
+                <small class="form-text text-danger"
+                       *ngIf="uploadForm.get('uploadedImage')?.errors?.required">
+                    Image is required.
+                </small>
+            </div>
+            <div>
+                <small class="form-text text-danger"
+                       *ngIf="uploadForm.get('uploadedImage')!.value && uploadForm.get('uploadedImage')!.value.size > 500000">
+                    Image size cannot be more than 500000 Bytes.
                 </small>
             </div>
         </div>
