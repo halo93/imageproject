@@ -10,6 +10,7 @@ import { IImage } from 'app/shared/model/image.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ImageService } from './image.service';
 import { ImageUploadDialogComponent } from 'app/entities/image/image-upload-dialog.component';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'jhi-image',
@@ -32,13 +33,30 @@ export class ImageComponent implements OnInit, OnDestroy {
   predicate: string;
   ascending: boolean;
   currentSearch: string;
+  fileTypeOptions: any[] = [
+    {
+      value: 'image/jpeg',
+      description: 'JPEG',
+    },
+    {
+      value: 'image/png',
+      description: 'PNG',
+    },
+  ];
+
+  searchForm = this.fb.group({
+    description: [],
+    fileType: [''],
+    size: [],
+  });
 
   constructor(
     protected imageService: ImageService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected parseLinks: JhiParseLinks,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
   ) {
     this.images = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
@@ -87,20 +105,29 @@ export class ImageComponent implements OnInit, OnDestroy {
     this.loadAll();
   }
 
-  search(query: string): void {
+  search(content: {}): void {
     this.images = [];
     this.links = {
       last: 0,
     };
     this.page = 0;
-    if (query) {
+    if (content && Object.values(content).some(e => e)) {
       this.predicate = '_score';
       this.ascending = false;
     } else {
       this.predicate = 'id';
       this.ascending = true;
+      this.searchForm.patchValue({
+        description: null,
+        size: null,
+        fileType: '',
+      });
     }
-    this.currentSearch = query;
+
+    this.currentSearch = Object.values(content)
+      .filter(e => e)
+      .map(e => `"${e}"`)
+      .join('AND');
     this.loadAll();
   }
 

@@ -9,7 +9,7 @@
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group">
-            <label class="form-control-label" for="field_description">Description</label>
+            <label class="form-control-labe" for="field_description">Description*</label>
             <input type="text" class="form-control" name="path" id="field_description"
                    formControlName="description"/>
             <div *ngIf="uploadForm.get('description')!.invalid && (uploadForm.get('description')!.dirty || uploadForm.get('description')!.touched)">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_uploadedImage">Image</label>
+            <label class="form-control-label" for="field_uploadedImage">Image*</label>
             <div>
                 <div *ngIf="uploadForm.get('uploadedImage')!.value" class="form-text text-danger clearfix">
                     <span class="pull-left"> {{ uploadForm.get('uploadedImage')!.value.size }} Byte(s)</span>
@@ -32,7 +32,7 @@
                         <fa-icon icon="times"></fa-icon>
                     </button>
                 </div>
-                <input type="file" id="file_uploadedImage" (change)="setFileData($event && $event.target.files)" accept="image/jpeg, image/png" />
+                <input type="file" id="file_uploadedImage" (change)="setFileData($event); validateFileSize()" accept="image/jpeg, image/png" />
             </div>
             <input type="hidden" class="form-control" name="uploadedImage" id="field_uploadedImage"
                    formControlName="uploadedImage"/>
@@ -44,7 +44,7 @@
             </div>
             <div>
                 <small class="form-text text-danger"
-                       *ngIf="uploadForm.get('uploadedImage')!.value && uploadForm.get('uploadedImage')!.value.size > 500000">
+                       *ngIf="uploadForm.get('uploadedImage')?.errors?.maxbyte">
                     Image size cannot be more than 500000 Bytes.
                 </small>
             </div>

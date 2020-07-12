@@ -36,9 +36,17 @@ export class ImageUploadDialogComponent {
     });
   }
 
-  setFileData(files: FileList): void {
-    if (files.length > 0) {
-      this.uploadForm.get('uploadedImage')?.setValue(files[0]);
+  setFileData(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      this.uploadForm.get('uploadedImage')?.setValue(target.files[0]);
+    }
+  }
+
+  validateFileSize(): void {
+    const uploadedImage = this.uploadForm.get('uploadedImage');
+    if (uploadedImage && uploadedImage.value.size > 500000) {
+      uploadedImage.setErrors({ maxbyte: true });
     }
   }
 
