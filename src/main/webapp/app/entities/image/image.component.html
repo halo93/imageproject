@@ -52,7 +52,7 @@
     </div>
     <br>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="images?.length === 0">
+    <div class="alert alert-warning" id="no-result" *ngIf="!processing && images?.length === 0">
         <span>No images found</span>
     </div>
 

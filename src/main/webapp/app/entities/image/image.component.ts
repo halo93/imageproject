@@ -33,6 +33,7 @@ export class ImageComponent implements OnInit, OnDestroy {
   predicate: string;
   ascending: boolean;
   currentSearch: string;
+  processing: boolean;
   fileTypeOptions: any[] = [
     {
       value: 'image/jpeg',
@@ -66,6 +67,7 @@ export class ImageComponent implements OnInit, OnDestroy {
     };
     this.predicate = 'id';
     this.ascending = true;
+    this.processing = false;
     this.currentSearch =
       this.activatedRoute.snapshot && this.activatedRoute.snapshot.queryParams['search']
         ? this.activatedRoute.snapshot.queryParams['search']
@@ -73,6 +75,7 @@ export class ImageComponent implements OnInit, OnDestroy {
   }
 
   loadAll(): void {
+    this.processing = true;
     if (this.currentSearch) {
       this.imageService
         .search({
@@ -81,7 +84,10 @@ export class ImageComponent implements OnInit, OnDestroy {
           size: this.itemsPerPage,
           sort: this.sort(),
         })
-        .subscribe((res: HttpResponse<IImage[]>) => this.paginateImages(res.body, res.headers));
+        .subscribe((res: HttpResponse<IImage[]>) => {
+          this.paginateImages(res.body, res.headers);
+          this.processing = false;
+        });
       return;
     }
 
@@ -91,7 +97,10 @@ export class ImageComponent implements OnInit, OnDestroy {
         size: this.itemsPerPage,
         sort: this.sort(),
       })
-      .subscribe((res: HttpResponse<IImage[]>) => this.paginateImages(res.body, res.headers));
+      .subscribe((res: HttpResponse<IImage[]>) => {
+        this.paginateImages(res.body, res.headers);
+        this.processing = false;
+      });
   }
 
   reset(): void {

@@ -52,11 +52,11 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()" [disabled]="submitted">
             <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
         </button>
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" [disabled]="submitted">
             <fa-icon icon="file-upload"></fa-icon>&nbsp;<span>Upload</span>
         </button>
     </div>
