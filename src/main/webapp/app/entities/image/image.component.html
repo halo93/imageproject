@@ -40,11 +40,11 @@
                 </div>
             </div>
             <div class="col-sm-3 form-group w-100" style="padding-top: 20px">
-                <button type="submit" class="input-group-append btn btn-info">
+                <button type="submit" class="input-group-append btn btn-info"process [disabled]="processing">
                     <fa-icon icon="search"></fa-icon>
                 </button>
 
-                <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch">
+                <button class="input-group-append btn btn-danger" (click)="search('')" *ngIf="currentSearch" [disabled]="processing">
                     <fa-icon icon="trash-alt"></fa-icon>
                 </button>
             </div>

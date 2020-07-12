@@ -10,6 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class ImageUploadDialogComponent {
   submitted: boolean;
+  processing: boolean;
 
   uploadForm = this.fb.group({
     description: [null, [Validators.maxLength(500), Validators.required]],
@@ -24,22 +25,25 @@ export class ImageUploadDialogComponent {
     private fb: FormBuilder
   ) {
     this.submitted = false;
+    this.processing = false;
   }
 
   cancel(): void {
     this.activeModal.dismiss();
   }
 
-  confirmUpload(content: any): void {
+  confirmUpload(): void {
     this.submitted = true;
     if (this.uploadForm.invalid) {
       return;
     }
+    this.processing = true;
     const formData: FormData = new FormData();
-    formData.append('description', content.description);
-    formData.append('uploadedImage', content.uploadedImage, content.uploadedImage.name);
+    formData.append('description', this.uploadForm.get('description')?.value);
+    formData.append('uploadedImage', this.uploadForm.get('uploadedImage')?.value, this.uploadForm.get('uploadedImage')?.value.name);
     this.imageService.upload(formData).subscribe(() => {
       this.submitted = false;
+      this.processing = false;
       this.eventManager.broadcast('imageListModification');
       this.activeModal.close();
     });

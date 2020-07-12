@@ -1,4 +1,4 @@
-<form name="uploadForm" role="form" novalidate [formGroup]="uploadForm" (ngSubmit)="confirmUpload(uploadForm.value)">
+<form name="uploadForm" role="form" novalidate [formGroup]="uploadForm" (ngSubmit)="confirmUpload()">
     <div class="modal-header">
         <h4 class="modal-title">Upload a new image</h4>
 
@@ -52,11 +52,11 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()" [disabled]="submitted">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()" [disabled]="processing">
             <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
         </button>
 
-        <button type="submit" class="btn btn-primary" [disabled]="submitted">
+        <button type="submit" class="btn btn-primary" [disabled]="processing">
             <fa-icon icon="file-upload"></fa-icon>&nbsp;<span>Upload</span>
         </button>
     </div>
