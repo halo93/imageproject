@@ -31,6 +31,7 @@ public class ImageResourceTest {
 
     private static final String DEFAULT_PATH = "AAAAAAAAAA";
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String NOT_EXIST_DESCRIPTION = "NOTEXIST";
     private static final String SUPPORTED_FILE_TYPE_JPEG = "image/jpeg";
     private static final String SUPPORTED_FILE_TYPE_PNG = "image/png";
 
@@ -89,7 +90,7 @@ public class ImageResourceTest {
 
         PageRequest mockPageRequest = PageRequest.of(0, 20);
         when(imageService.findAll(mockPageRequest))
-            .thenReturn(new PageImpl<>(imageDTOs, PageRequest.of(0, 1), 1));
+            .thenReturn(new PageImpl<>(imageDTOs, mockPageRequest, 1));
 
         ResponseEntity<List<ImageDTO>> resultResponseEntity = testClass.getAllImages(mockPageRequest);
         ImageDTO respondedImageDTO = resultResponseEntity.getBody().get(0);
@@ -129,7 +130,7 @@ public class ImageResourceTest {
         PageRequest mockPageRequest = PageRequest.of(0, 20);
         String queryString = String.format("description:%s AND size:%s", DEFAULT_DESCRIPTION, mockSize);
         when(imageService.search(queryString, mockPageRequest))
-            .thenReturn(new PageImpl<>(imageDTOs, PageRequest.of(0, 2), 2));
+            .thenReturn(new PageImpl<>(imageDTOs, mockPageRequest, 2));
 
         ResponseEntity<List<ImageDTO>> resultResponseEntity = testClass.searchImages(queryString, mockPageRequest);
         ImageDTO respondedImageDTO1 = resultResponseEntity.getBody().get(0);
@@ -142,6 +143,29 @@ public class ImageResourceTest {
         assertThat(respondedImageDTO2.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(respondedImageDTO2.getSize()).isEqualTo(mockSize);
         assertThat(respondedImageDTO2.getFileType()).isEqualTo(SUPPORTED_FILE_TYPE_PNG);
+
+        Mockito.verify(imageService, Mockito.atLeastOnce()).search(queryString, mockPageRequest);
+    }
+
+    @Test
+    void shouldNoContentResponseEntity_WhenSearchImages_WithNotFoundDescription() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        final byte[] fileContent = "data".getBytes();
+        BigDecimal mockSize = BigDecimal.valueOf(fileContent.length);
+
+        List<ImageDTO> imageDTOs = Collections.emptyList();
+
+        PageRequest mockPageRequest = PageRequest.of(0, 20);
+        String queryString = String.format("description:%s AND size:%s", NOT_EXIST_DESCRIPTION, mockSize);
+        when(imageService.search(queryString, mockPageRequest))
+            .thenReturn(new PageImpl<>(imageDTOs, mockPageRequest, 0));
+
+        ResponseEntity<List<ImageDTO>> resultResponseEntity = testClass.searchImages(queryString, mockPageRequest);
+        assertThat(resultResponseEntity.getStatusCodeValue()).isEqualTo(204);
+        assertThat(resultResponseEntity.getHeaders().getFirst("X-Total-Count")).isEqualTo(null);
+        assertThat(resultResponseEntity.getBody()).isEqualTo(null);
 
         Mockito.verify(imageService, Mockito.atLeastOnce()).search(queryString, mockPageRequest);
     }

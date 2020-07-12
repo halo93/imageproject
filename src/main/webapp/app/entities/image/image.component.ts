@@ -132,11 +132,10 @@ export class ImageComponent implements OnInit, OnDestroy {
         fileType: '',
       });
     }
-
-    this.currentSearch = Object.values(content)
-      .filter(e => e)
-      .map(e => `"${e}"`)
-      .join('AND');
+    this.currentSearch = Object.entries(content)
+      .filter(e => e[1])
+      .map(e => `${e[0]}:"${e[1]}"`)
+      .join(' AND ');
     this.loadAll();
   }
 
@@ -174,7 +173,9 @@ export class ImageComponent implements OnInit, OnDestroy {
 
   protected paginateImages(data: IImage[] | null, headers: HttpHeaders): void {
     const headersLink = headers.get('link');
-    this.links = this.parseLinks.parse(headersLink ? headersLink : '');
+    if (headersLink) {
+      this.links = this.parseLinks.parse(headersLink ? headersLink : '');
+    }
     if (data) {
       for (let i = 0; i < data.length; i++) {
         this.images.push(data[i]);

@@ -197,7 +197,7 @@ public class ImageResourceIT {
         imageSearchRepository.save(image);
 
         // Search the image
-        restImageMockMvc.perform(get("/api/_search/images?query=path:" + DEFAULT_PATH))
+        restImageMockMvc.perform(get("/api/_search/images?query=description:" + DEFAULT_DESCRIPTION))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].path").value(hasItem(DEFAULT_PATH)))
@@ -220,15 +220,13 @@ public class ImageResourceIT {
 
     @Test
     @Transactional
-    public void shouldResponse200WithEmptyResponse_WhenSearchImage_WithNotExistSearchQuery() throws Exception {
+    public void shouldResponse204_WhenSearchImage_WithNotExistSearchQuery() throws Exception {
         // Initialize the database
         imageSearchRepository.save(image);
 
         // Search the image
-        restImageMockMvc.perform(get("/api/_search/images?query=path:NOTEXIST"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$").value(hasSize(0)));
+        restImageMockMvc.perform(get("/api/_search/images?query=description:NOTEXIST"))
+            .andExpect(status().isNoContent());
     }
 
 }
