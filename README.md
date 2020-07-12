@@ -19,6 +19,9 @@ _Steps:_
 
   `docker-compose -f src/main/docker/app-rds-cloud.yml up -d`
 
+- To stop the container, execute the command below:
+  `docker-compose -f src/main/docker/app-rds-cloud.yml down`
+
 \*\* We can track the processing status by using these command:
 
 ```
@@ -33,6 +36,8 @@ _Steps:_
     ./mvnw package -Pdev verify jib:dockerBuild
 
     -- Instantiate docker container:
-        -- Using local database:
+        -- Using local database & ES:
            docker-compose -f src/main/docker/app-local.yml up -d
+    -- Stop and remove the container:
+        docker-compose -f src/main/docker/app-local.yml down
 ```

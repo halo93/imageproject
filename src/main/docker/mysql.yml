@@ -6,7 +6,6 @@ services:
     #     - ~/volumes/jhipster/imageproject/mysql/:/var/lib/mysql/
     environment:
       - MYSQL_USER=root
-      - MYSQL_PASSWORD=voxvod-cukqe8-bUkqag
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=imageproject
     ports:
