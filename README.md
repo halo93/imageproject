@@ -9,22 +9,30 @@ _Prequesites:_
 
 _Steps:_
 
-- From console, execute the command below to build a docker image for Imageproject:
+- From console, execute the command below to pull the docker image for Imageproject:
 
   ```
-  ./mvnw package -Pdev verify jib:dockerBuild
+  docker pull halo93/imageproject:latest
   ```
 
-- After the step to create a docker image has done, there are two options to deploy a container for it:
+- After the step to pull the docker image has done, access to the imageproject root folder and execute the below command to instantiate a container:
 
-  - Deploy using local db (to support development phase)
-    `docker-compose -f src/main/docker/app-local.yml up -d`
-  - Deploy using aws rds db (to support release phase)
-    `docker-compose -f src/main/docker/app-rds-cloud.yml up -d`
+  `docker-compose -f src/main/docker/app-rds-cloud.yml up -d`
 
 \*\* We can track the processing status by using these command:
 
 ```
     docker ps -a (Then copy the docker container id of imageproject)
     docker logs --details -f DOCKER_CONTAINER_ID_IMAGE_PROJECT
+```
+
+\*\* There is an option to build the imageproject docker image on your local, but it requires java and maven already installed on the machine. Steps:
+
+```
+    -- Build docker image:
+    ./mvnw package -Pdev verify jib:dockerBuild
+
+    -- Instantiate docker container:
+        -- Using local database:
+           docker-compose -f src/main/docker/app-local.yml up -d
 ```
