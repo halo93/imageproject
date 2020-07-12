@@ -1,7 +1,7 @@
 version: '2'
 services:
-  imageproject-app:
-    image: imageproject
+  imageproject:
+    image: halo93/imageproject:latest
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,swagger
