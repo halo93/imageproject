@@ -1,11 +1,12 @@
 version: '2'
 services:
   imageproject:
-    image: imageproject:latest
+    image: imageproject
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=dev,swagger
       - SPRING_DATASOURCE_URL=jdbc:mysql://imageproject-mysql:3306/imageproject?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_PASSWORD=
       - APPLICATION_ELASTICSEARCH_HOST=http://imageproject-elasticsearch:9200
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
     ports:

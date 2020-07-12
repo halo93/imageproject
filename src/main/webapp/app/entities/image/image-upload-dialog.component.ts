@@ -9,6 +9,8 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './image-upload-dialog.component.html',
 })
 export class ImageUploadDialogComponent {
+  submitted: boolean;
+
   uploadForm = this.fb.group({
     description: [null, [Validators.maxLength(500), Validators.required]],
     uploadedImage: [null, [Validators.required]],
@@ -20,17 +22,24 @@ export class ImageUploadDialogComponent {
     protected eventManager: JhiEventManager,
     protected elementRef: ElementRef,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.submitted = false;
+  }
 
   cancel(): void {
     this.activeModal.dismiss();
   }
 
   confirmUpload(content: any): void {
+    this.submitted = true;
+    if (this.uploadForm.invalid) {
+      return;
+    }
     const formData: FormData = new FormData();
     formData.append('description', content.description);
     formData.append('uploadedImage', content.uploadedImage, content.uploadedImage.name);
     this.imageService.upload(formData).subscribe(() => {
+      this.submitted = false;
       this.eventManager.broadcast('imageListModification');
       this.activeModal.close();
     });
@@ -40,6 +49,8 @@ export class ImageUploadDialogComponent {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.uploadForm.get('uploadedImage')?.setValue(target.files[0]);
+    } else {
+      this.uploadForm.get('uploadedImage')?.setErrors({ required: true });
     }
   }
 
