@@ -38,6 +38,11 @@ _Steps:_
     -- Instantiate docker container:
         -- Using local database & ES:
            docker-compose -f src/main/docker/app-local.yml up -d
+        -- Using AWS RDS database & AWS ES:
+           docker-compose -f src/main/docker/app-rds-cloud.yml up -d
     -- Stop and remove the container:
-        docker-compose -f src/main/docker/app-local.yml down
+        -- Using local database & ES:
+           docker-compose -f src/main/docker/app-local.yml down
+        -- Using AWS RDS database & AWS ES:
+           docker-compose -f src/main/docker/app-rds-cloud.yml down
 ```
