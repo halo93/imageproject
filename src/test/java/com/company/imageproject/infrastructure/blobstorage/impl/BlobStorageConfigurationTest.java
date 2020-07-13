@@ -46,7 +46,7 @@ public class BlobStorageConfigurationTest {
     }
 
     @Bean
-    public AWSS3Service awsS3Service(TransferManager transferManager) {
-        return new AWSS3Service(transferManager);
+    public AWSS3Facade awsS3Facade(TransferManager transferManager) {
+        return new AWSS3Facade(transferManager);
     }
 }

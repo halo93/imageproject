@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore({"com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "javax.management.*"})
-public class AWSS3ServiceTest {
+public class AWSS3FacadeTest {
 
     private static final String DEFAULT_PATH = "AAAAAAAAAA";
     private static final String SUPPORTED_FILE_TYPE_JPEG = "image/jpeg";
@@ -40,7 +40,7 @@ public class AWSS3ServiceTest {
     private TransferManager transferManager;
 
     @InjectMocks
-    private AWSS3Service testClass;
+    private AWSS3Facade testClass;
 
     @Before
     public void setUp() {

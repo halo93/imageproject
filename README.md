@@ -80,3 +80,10 @@
         -- Using AWS RDS database & AWS ES:
            docker-compose -f src/main/docker/app-rds-cloud.yml down
 ```
+
+---
+
+## NOTE
+
+- C4 model diagrams are stored under the path: ./c4model
+- Gherkin files are stored under the path: ./src/test/features/

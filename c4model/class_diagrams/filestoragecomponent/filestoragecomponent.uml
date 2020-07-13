@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.company.imageproject.infrastructure.blobstorage</OriginalElement>
+  <nodes>
+    <node x="805.5" y="534.5">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse</node>
+    <node x="1329.5" y="654.5">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest</node>
+    <node x="1108.5" y="534.5">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse.InputStreamUploadResponseBuilder</node>
+    <node x="1063.5" y="414.5">com.company.imageproject.infrastructure.blobstorage.api.BlobStorageException</node>
+    <node x="220.0" y="734.5">com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties</node>
+    <node x="1929.0" y="94.5">com.company.imageproject.infrastructure.blobstorage.impl.FilePutObject</node>
+    <node x="1672.0" y="654.5">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUploadRequestBuilder</node>
+    <node x="1911.5" y="-25.5">com.company.imageproject.infrastructure.blobstorage.impl.FilePutObject.FilePutObjectBuilder</node>
+    <node x="2125.5" y="294.5">com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Exception</node>
+    <node x="1649.5" y="374.5">com.company.imageproject.infrastructure.blobstorage.impl.BlobStorageConfiguration</node>
+    <node x="-24.0" y="654.5">com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties.FileStorage</node>
+    <node x="1936.0" y="294.5">com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Facade</node>
+    <node x="1057.5" y="174.5">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload.InputStreamUploadBuilder</node>
+    <node x="831.0" y="654.5">com.company.imageproject.infrastructure.blobstorage.api.FileStorageService</node>
+    <node x="500.0" y="734.5">com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService</node>
+    <node x="1074.5" y="294.5">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Facade" target="com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Exception">
+      <point x="64.0" y="-0.0" />
+      <point x="-74.5" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="100.0" y="-20.0" />
+      <point x="1440.0" y="740.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Facade" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload">
+      <point x="-64.0" y="-0.0" />
+      <point x="85.5" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Exception">
+      <point x="100.0" y="-0.0" />
+      <point x="2200.0" y="760.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload">
+      <point x="20.0" y="-25.5" />
+      <point x="620.0" y="320.0" />
+      <point x="-85.5" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.FileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="89.0" y="-0.0" />
+      <point x="-110.5" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.FileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Facade">
+      <point x="100.0" y="-10.0" />
+      <point x="2000.0" y="750.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.FilePutObject.FilePutObjectBuilder" target="com.company.imageproject.infrastructure.blobstorage.impl.FilePutObject">
+      <point x="0.0" y="25.5" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.FileStorageService">
+      <point x="80.0" y="-25.5" />
+      <point x="680.0" y="680.0" />
+      <point x="-89.0" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="85.5" y="10.0" />
+      <point x="1600.0" y="330.0" />
+      <point x="1600.0" y="660.0" />
+      <point x="110.5" y="-20.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.impl.FilePutObject">
+      <point x="0.0" y="-25.5" />
+      <point x="600.0" y="120.0" />
+      <point x="-71.0" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Facade" target="com.company.imageproject.infrastructure.blobstorage.impl.FilePutObject">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse.InputStreamUploadResponseBuilder" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse">
+      <point x="-131.5" y="-0.0" />
+      <point x="114.5" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageException">
+      <point x="0.0" y="25.5" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties.FileStorage" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties">
+      <point x="40.0" y="25.5" />
+      <point x="80.0" y="760.0" />
+      <point x="-100.0" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties.FileStorage">
+      <point x="0.0" y="-25.5" />
+      <point x="320.0" y="680.0" />
+      <point x="64.0" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload">
+      <point x="0.0" y="-25.5" />
+      <point x="1440.0" y="340.0" />
+      <point x="85.5" y="20.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUploadRequestBuilder" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="-128.0" y="-0.0" />
+      <point x="110.5" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties">
+      <point x="-100.0" y="-0.0" />
+      <point x="100.0" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload.InputStreamUploadBuilder" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload">
+      <point x="0.0" y="25.5" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.BlobStorageConfiguration" target="com.company.imageproject.infrastructure.blobstorage.impl.AWSS3Facade">
+      <point x="110.5" y="-0.0" />
+      <point x="1960.0" y="400.0" />
+      <point x="-40.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageException">
+      <point x="40.0" y="-25.5" />
+      <point x="640.0" y="440.0" />
+      <point x="-96.5" y="-0.0" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl.AWSFileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse">
+      <point x="60.0" y="-25.5" />
+      <point x="660.0" y="560.0" />
+      <point x="-114.5" y="-0.0" />
+    </edge>
+  </edges>
+  <settings layout="Directed Orthogonal" zoom="0.9603277274687365" x="1125.5" y="412.0" />
+  <SelectedNodes>
+    <node>com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 class AWSFileStorageService implements FileStorageService {
 
     private final BlobStorageProperties blobStorageProperties;
-    private final AWSS3Service s3Service;
+    private final AWSS3Facade s3Service;
 
     @Override
     public InputStreamUploadResponse storeFile(InputStreamUploadRequest inputStreamToBeUploaded) {

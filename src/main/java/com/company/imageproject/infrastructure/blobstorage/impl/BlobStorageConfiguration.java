@@ -28,8 +28,8 @@ class BlobStorageConfiguration {
     }
 
     @Bean
-    AWSS3Service awsS3Service(TransferManager transferManager) {
-        return new AWSS3Service(transferManager);
+    AWSS3Facade awsS3Facade(TransferManager transferManager) {
+        return new AWSS3Facade(transferManager);
     }
 
 }

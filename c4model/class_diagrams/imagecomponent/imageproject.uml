@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.company.imageproject</OriginalElement>
+  <nodes>
+    <node x="992.0185895499852" y="262.0">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUploadRequestBuilder</node>
+    <node x="1459.0185895499853" y="262.0">com.company.imageproject.infrastructure.blobstorage.api.FileStorageService</node>
+    <node x="1268.0185895499853" y="262.0">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload</node>
+    <node x="1478.0185895499853" y="0.0">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse</node>
+    <node x="1828.7379668780832" y="121.0">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse.InputStreamUploadResponseBuilder</node>
+    <node x="1615.7379668780832" y="121.0">com.company.imageproject.infrastructure.blobstorage.api.BlobStorageException</node>
+    <node x="792.0185895499851" y="262.0">com.company.imageproject.repository.ImageRepository</node>
+    <node x="1678.1080539615423" y="423.0">com.company.imageproject.infrastructure.blobstorage.impl</node>
+    <node x="777.5663872948758" y="423.0">com.company.imageproject.service.ImageServiceImpl</node>
+    <node x="2148.737966878083" y="121.0">com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties.FileStorage</node>
+    <node x="189.01962901439686" y="121.0">com.company.imageproject.service.dto.ImageDTO</node>
+    <node x="293.725" y="423.0">com.company.imageproject.service.mapper.ImageMapperImpl</node>
+    <node x="447.01858954998517" y="0.0">com.company.imageproject.domain.AbstractAuditingEntity</node>
+    <node x="0.0" y="423.0">com.company.imageproject.web.rest.ImageResource</node>
+    <node x="315.01962901439686" y="121.0">com.company.imageproject.service.mapper.EntityMapper</node>
+    <node x="131.97692288331848" y="0.0">com.company.imageproject.service.dto.ImageUploadDTO</node>
+    <node x="1321.4183101781944" y="423.0">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload.InputStreamUploadBuilder</node>
+    <node x="372.5185895499852" y="262.0">com.company.imageproject.service.mapper.ImageMapper</node>
+    <node x="572.0185895499851" y="262.0">com.company.imageproject.repository.search.ImageSearchRepository</node>
+    <node x="129.0185895499851" y="262.0">com.company.imageproject.service.ImageService</node>
+    <node x="1214.5185895499853" y="121.0">com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest</node>
+    <node x="2112.737966878083" y="262.0">com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties</node>
+    <node x="513.1742625591467" y="121.0">com.company.imageproject.domain.Image</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.company.imageproject.service.mapper.ImageMapper" target="com.company.imageproject.service.mapper.EntityMapper">
+      <point x="-16.0" y="-25.5" />
+      <point x="420.5185895499852" y="192.0" />
+      <point x="382.51962901439686" y="192.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.infrastructure.blobstorage.api.FileStorageService">
+      <point x="74.5454545454545" y="-25.5" />
+      <point x="934.1118418403303" y="403.0" />
+      <point x="1503.5185895499853" y="403.0" />
+      <point x="-44.5" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.FileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse">
+      <point x="44.5" y="-25.5" />
+      <point x="1592.5185895499853" y="232.0" />
+      <point x="1605.2379668780832" y="232.0" />
+      <point x="1605.2379668780832" y="101.0" />
+      <point x="1592.5185895499853" y="101.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageService" target="com.company.imageproject.service.dto.ImageUploadDTO">
+      <point x="-33.75" y="-25.5" />
+      <point x="162.7685895499851" y="232.0" />
+      <point x="116.79166666666663" y="232.0" />
+      <point x="116.79166666666663" y="101.0" />
+      <point x="187.85192288331848" y="101.0" />
+      <point x="-18.625" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="-57.0" y="-25.5" />
+      <point x="1296.5185895499853" y="242.0" />
+      <point x="1306.6019228833184" y="242.0" />
+      <point x="-18.416666666666742" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.web.rest.ImageResource" target="com.company.imageproject.service.dto.ImageDTO">
+      <point x="0.0" y="-25.5" />
+      <point x="71.0" y="403.0" />
+      <point x="72.54166666666663" y="403.0" />
+      <point x="72.54166666666663" y="242.0" />
+      <point x="197.8529623477301" y="242.0" />
+      <point x="-44.16666666666674" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.domain.Image">
+      <point x="-29.81818181818187" y="-25.5" />
+      <point x="829.748205476694" y="343.0" />
+      <point x="561.5185895499851" y="343.0" />
+      <point x="561.5185895499851" y="242.0" />
+      <point x="567.8171197020038" y="242.0" />
+      <point x="12.14285714285711" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageException">
+      <point x="9.916666666666742" y="-25.5" />
+      <point x="1747.5247206282093" y="403.0" />
+      <point x="1760.4879668780832" y="403.0" />
+      <point x="48.25" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse">
+      <point x="29.75" y="-25.5" />
+      <point x="1767.3580539615423" y="393.0" />
+      <point x="2102.237966878083" y="393.0" />
+      <point x="2102.237966878083" y="91.0" />
+      <point x="1684.1185895499852" y="91.0" />
+      <point x="91.59999999999991" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.mapper.ImageMapperImpl" target="com.company.imageproject.service.dto.ImageDTO">
+      <point x="-31.40000000000009" y="-25.5" />
+      <point x="340.82499999999993" y="393.0" />
+      <point x="285.5185895499851" y="393.0" />
+      <point x="285.5185895499851" y="222.0" />
+      <point x="250.8529623477301" y="222.0" />
+      <point x="8.833333333333258" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload">
+      <point x="59.636363636363626" y="-25.5" />
+      <point x="919.2027509312395" y="393.0" />
+      <point x="1296.5185895499853" y="393.0" />
+      <point x="-57.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="-9.916666666666742" y="-25.5" />
+      <point x="1727.6913872948758" y="363.0" />
+      <point x="1692.1435895499853" y="363.0" />
+      <point x="1692.1435895499853" y="222.0" />
+      <point x="1417.1019228833184" y="222.0" />
+      <point x="92.08333333333326" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.dto.ImageDTO" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse">
+      <point x="26.5" y="-25.5" />
+      <point x="268.51962901439686" y="91.0" />
+      <point x="1500.9185895499854" y="91.0" />
+      <point x="-91.59999999999991" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.mapper.ImageMapper" target="com.company.imageproject.domain.Image">
+      <point x="48.0" y="-25.5" />
+      <point x="484.5185895499852" y="242.0" />
+      <point x="543.5314054162895" y="242.0" />
+      <point x="-12.14285714285711" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties.FileStorage">
+      <point x="-75.0" y="-25.5" />
+      <point x="2137.737966878083" y="242.0" />
+      <point x="2164.737966878083" y="242.0" />
+      <point x="-48.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties.FileStorage" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties">
+      <point x="48.0" y="25.5" />
+      <point x="2260.737966878083" y="242.0" />
+      <point x="2287.737966878083" y="242.0" />
+      <point x="75.0" y="-25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.mapper.ImageMapperImpl" target="com.company.imageproject.service.mapper.ImageMapper">
+      <point x="31.399999999999977" y="-25.5" />
+      <point x="-32.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload">
+      <point x="18.416666666666742" y="25.5" />
+      <point x="1343.4352562166519" y="242.0" />
+      <point x="1353.5185895499853" y="242.0" />
+      <point x="0.0" y="-25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUploadRequestBuilder" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="0.0" y="-25.5" />
+      <point x="1120.0185895499853" y="242.0" />
+      <point x="1269.7685895499853" y="242.0" />
+      <point x="-55.25" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageService" target="com.company.imageproject.service.dto.ImageDTO">
+      <point x="33.75" y="-25.5" />
+      <point x="230.2685895499851" y="242.0" />
+      <point x="215.51962901439686" y="242.0" />
+      <point x="-26.5" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload.InputStreamUploadBuilder" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload">
+      <point x="0.0" y="-25.5" />
+      <point x="1423.9183101781944" y="393.0" />
+      <point x="1353.5185895499853" y="393.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl" target="com.company.imageproject.infrastructure.blobstorage.api.FileStorageService">
+      <point x="-29.75" y="-25.5" />
+      <point x="1707.8580539615423" y="373.0" />
+      <point x="1592.5185895499853" y="373.0" />
+      <point x="44.5" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.FileStorageService" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="-44.5" y="-25.5" />
+      <point x="1503.5185895499853" y="232.0" />
+      <point x="1380.2685895499853" y="232.0" />
+      <point x="55.25" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.service.dto.ImageUploadDTO">
+      <point x="14.909090909090878" y="-25.5" />
+      <point x="874.4754782039668" y="363.0" />
+      <point x="959.5185895499851" y="363.0" />
+      <point x="959.5185895499851" y="71.0" />
+      <point x="262.3519228833185" y="71.0" />
+      <point x="55.875" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageProperties">
+      <point x="49.58333333333326" y="-25.5" />
+      <point x="1787.1913872948758" y="403.0" />
+      <point x="2212.737966878083" y="403.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.repository.search.ImageSearchRepository">
+      <point x="-14.909090909090878" y="-25.5" />
+      <point x="844.657296385785" y="333.0" />
+      <point x="672.0185895499851" y="333.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest">
+      <point x="44.72727272727275" y="-25.5" />
+      <point x="904.2936600221485" y="383.0" />
+      <point x="981.5185895499852" y="383.0" />
+      <point x="981.5185895499852" y="232.0" />
+      <point x="1232.9352562166519" y="232.0" />
+      <point x="-92.08333333333326" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.mapper.ImageMapper" target="com.company.imageproject.service.dto.ImageDTO">
+      <point x="-48.0" y="-25.5" />
+      <point x="388.5185895499852" y="202.0" />
+      <point x="286.1862956810636" y="202.0" />
+      <point x="44.166666666666686" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.domain.Image" target="com.company.imageproject.domain.AbstractAuditingEntity">
+      <point x="0.0" y="-25.5" />
+      <point x="555.6742625591467" y="81.0" />
+      <point x="550.5185895499851" y="81.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.service.mapper.ImageMapper">
+      <point x="-44.72727272727275" y="-25.5" />
+      <point x="814.839114567603" y="353.0" />
+      <point x="468.5185895499852" y="353.0" />
+      <point x="32.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.repository.search.ImageSearchRepository" target="com.company.imageproject.domain.Image">
+      <point x="0.0" y="-25.5" />
+      <point x="672.0185895499851" y="242.0" />
+      <point x="579.9599768448611" y="242.0" />
+      <point x="24.285714285714334" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl" target="com.company.imageproject.infrastructure.blobstorage.impl">
+      <point x="-39.66666666666663" y="25.5" />
+      <point x="1697.9413872948758" y="494.0" />
+      <point x="1658.1080539615423" y="494.0" />
+      <point x="1658.1080539615423" y="465.5" />
+      <point x="-59.5" y="17.0" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.service.ImageService">
+      <point x="-74.5454545454545" y="-25.5" />
+      <point x="785.0209327494213" y="373.0" />
+      <point x="230.2685895499851" y="373.0" />
+      <point x="33.75" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.impl" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload">
+      <point x="-49.58333333333326" y="-25.5" />
+      <point x="1688.0247206282093" y="383.0" />
+      <point x="1410.5185895499853" y="383.0" />
+      <point x="57.0" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse">
+      <point x="29.818181818181756" y="-25.5" />
+      <point x="889.3845691130575" y="373.0" />
+      <point x="970.5185895499851" y="373.0" />
+      <point x="970.5185895499851" y="101.0" />
+      <point x="1546.7185895499852" y="101.0" />
+      <point x="-45.799999999999955" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse.InputStreamUploadResponseBuilder" target="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadResponse">
+      <point x="0.0" y="-25.5" />
+      <point x="1960.2379668780832" y="101.0" />
+      <point x="1638.318589549985" y="101.0" />
+      <point x="45.799999999999955" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.repository.ImageRepository" target="com.company.imageproject.domain.Image">
+      <point x="0.0" y="-25.5" />
+      <point x="870.5185895499851" y="232.0" />
+      <point x="592.1028339877182" y="232.0" />
+      <point x="36.428571428571445" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.web.rest.ImageResource" target="com.company.imageproject.service.ImageService">
+      <point x="47.33333333333334" y="-25.5" />
+      <point x="118.33333333333337" y="403.0" />
+      <point x="162.7685895499851" y="403.0" />
+      <point x="-33.75" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload" target="com.company.imageproject.infrastructure.blobstorage.api.BlobStorageException">
+      <point x="57.0" y="-25.5" />
+      <point x="1410.5185895499853" y="242.0" />
+      <point x="1663.9879668780832" y="242.0" />
+      <point x="-48.25" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.service.dto.ImageDTO">
+      <point x="-59.636363636363626" y="-25.5" />
+      <point x="799.9300236585123" y="363.0" />
+      <point x="322.1019228833185" y="363.0" />
+      <point x="322.1019228833185" y="212.0" />
+      <point x="268.51962901439686" y="212.0" />
+      <point x="26.5" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.mapper.ImageMapperImpl" target="com.company.imageproject.domain.Image">
+      <point x="0.0" y="-25.5" />
+      <point x="372.225" y="383.0" />
+      <point x="333.1019228833185" y="383.0" />
+      <point x="333.1019228833185" y="222.0" />
+      <point x="519.2456911305753" y="222.0" />
+      <point x="-36.428571428571445" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.web.rest.ImageResource" target="com.company.imageproject.service.dto.ImageUploadDTO">
+      <point x="-47.33333333333337" y="-25.5" />
+      <point x="23.66666666666663" y="403.0" />
+      <point x="1.344027484143794" y="403.0" />
+      <point x="1.344027484143794" y="91.0" />
+      <point x="150.60192288331848" y="91.0" />
+      <point x="-55.875" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.dto.ImageDTO" target="com.company.imageproject.service.dto.ImageUploadDTO">
+      <point x="-26.5" y="-25.5" />
+      <point x="215.51962901439686" y="101.0" />
+      <point x="225.10192288331848" y="101.0" />
+      <point x="18.625" y="25.5" />
+    </edge>
+    <edge source="com.company.imageproject.service.ImageServiceImpl" target="com.company.imageproject.repository.ImageRepository">
+      <point x="0.0" y="-25.5" />
+      <point x="859.5663872948758" y="353.0" />
+      <point x="870.5185895499851" y="353.0" />
+      <point x="0.0" y="25.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.954564937848264" x="1156.5" y="257.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

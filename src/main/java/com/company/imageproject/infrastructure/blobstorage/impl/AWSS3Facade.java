@@ -15,7 +15,7 @@ import java.time.Instant;
 import static com.company.imageproject.infrastructure.blobstorage.api.InputStreamUploadRequest.InputStreamUpload;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class AWSS3Service {
+class AWSS3Facade {
 
     private static final String S3_FILE_PATH_FORMAT = "%s/%s";
     private final TransferManager transferManager;
