@@ -51,8 +51,8 @@
      - Create a file named `credentials` and paste the below content to it:
        ```
         [default]
-        aws_access_key_id = AKIAT67LMDPSOGCMNB4C
-        aws_secret_access_key = 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
+        aws_access_key_id = xxx
+        aws_secret_access_key = yyy
        ```
 
    _Steps:_
